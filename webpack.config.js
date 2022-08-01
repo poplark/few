@@ -12,13 +12,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.(j|t)sx?$/,
+        test: /\.(j|t)sx?$/,
         exclude: /node_modules/,
         use: [
           'babel-loader'
         ]
       }, {
-        test: /.less$/,
+        test: /\.less$/,
         use: [
           'style-loader',
           'css-loader',
@@ -33,7 +33,6 @@ module.exports = {
       template: path.join(__dirname, './public/index.html'),
     })
   ],
-  watch: true,
   devServer: {
     hot: true,
   }

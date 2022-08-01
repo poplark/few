@@ -2,37 +2,42 @@ import React from 'react';
 import './index.less';
 
 /**
- * button 类型
+ * button 状态
  */
-type ButtonType = 'default' | 'primary';
 type ButtonStatus = 'success' | 'warning' | 'error';
 
 interface IButtonProps {
   /**
    * button 类型
    */
-  type: ButtonType;
+  primary?: boolean;
   /**
    * button 状态
    */
-  status: ButtonStatus;
-  disable: Boolean;
+  status?: ButtonStatus;
   /**
-   * A description of the prop that you seem fit :)
+   * 是否禁用
    */
-   kind: 'primary' | 'secondary' | 'cancel' | 'dark' | 'gray';
+  disable?: Boolean;
+  /**
+   * 点击事件处理函数，可选
+   */
+  onClick?: () => void;
+  label?: string;
+  size?: string;
 }
 
-export type ButtonProps = React.ButtonHTMLAttributes<IButtonProps>
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & IButtonProps;
 
-export const Button: React.FunctionComponent<ButtonProps> = function(props) {
-  const { type, children } = props;
+export const Button: React.FC<ButtonProps> = function(props) {
+  const { primary, status, children } = props;
 
-  const clz = `button-${type}`;
+  console.log('children :: ', React.version, primary, status, children);
+  const clz = primary ? `button-primary` : 'button-default';
 
   return (
     <button className={clz}>{children}</button>
   )
-}
+};
 
 export default Button;

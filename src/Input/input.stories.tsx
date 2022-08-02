@@ -24,8 +24,8 @@ export const Dynamic: ComponentStory<typeof Input> = (args) => {
   return <Input value={value} onChange={onChange} {...args} />;
 };
 Dynamic.args = {
-  color: 'primary',
-  iSize: 'lg',
+  iColor: 'primary',
+  iSize: 'large',
   disabled: false,
   defaultValue: 'holder',
 };

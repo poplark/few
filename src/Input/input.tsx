@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Classnames from 'classnames';
-import SizeType from '../config/size-type';
-
-type InputColor =
-  | 'default'
-  | 'primary'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger';
-type InputState = 'hover' | 'focus' | 'active' | 'loading';
+import { ColorType, getColorClass } from '../config/color-type';
+import { SizeType, getSizeClass } from '../config/size-type';
+import { StateType, getStateClass } from '../config/state-type';
 
 interface IInputProps {
   /**
@@ -23,7 +16,7 @@ interface IInputProps {
   /**
    * 输入框颜色
    */
-  color?: InputColor;
+  iColor?: ColorType;
   /**
    * 输入框大小
    */
@@ -31,13 +24,13 @@ interface IInputProps {
   /**
    * 输入框状态
    */
-  state?: InputState;
+  state?: StateType;
 }
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & IInputProps;
 
 const InnerInput = (props: InputProps, ref: React.ForwardedRef<HTMLInputElement>): JSX.Element => {
-  const { defaultValue, value, iSize, state, disabled, onChange, ...others } = props;
+  const { defaultValue, value, iColor, iSize, state, disabled, onChange, ...others } = props;
 
   console.log('input props:: ', defaultValue, value, iSize, state, disabled);
 
@@ -57,6 +50,12 @@ const InnerInput = (props: InputProps, ref: React.ForwardedRef<HTMLInputElement>
     }
   }, []);
 
+  const kClz = getColorClass(iColor);
+  const sClz = getSizeClass(iSize) || 'is-normal';
+  const stClz = getStateClass(state);
+  const dClz = disabled ? 'disabled' : '';
+  const clz = Classnames('input', kClz, sClz, stClz, dClz);
+
   let _value: string;
   if (!isMounted) {
     _value = value || defaultValue || '';
@@ -64,12 +63,12 @@ const InnerInput = (props: InputProps, ref: React.ForwardedRef<HTMLInputElement>
     _value = value as string;
   }
 
-  return <input value={_value} ref={_ref} onChange={_onChange} {...others}></input>;
+  return <input className={clz} value={_value} ref={_ref} onChange={_onChange} {...others}></input>;
 }
 
 export const Input = React.forwardRef(InnerInput);
 
 Input.displayName = 'Input';
 Input.defaultProps = {
-  iSize: 'nm',
+  iSize: 'normal',
 }

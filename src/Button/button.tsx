@@ -50,7 +50,6 @@ const Button: React.FC<ButtonProps> = function (props) {
     href,
     onClick,
     children,
-    style,
     ...others
   } = props;
 
@@ -117,15 +116,11 @@ const Button: React.FC<ButtonProps> = function (props) {
     [disabled, onClick],
   );
 
-  const _style: React.CSSProperties = Object.assign({}, style);
-  if (disabled) _style.pointerEvents = 'none';
-
   if (kind === 'link' && !!href) {
     return (
       <a
         className={clz}
         href={href}
-        style={_style}
         onClick={_onClick}
         {...others}
       >
@@ -138,7 +133,6 @@ const Button: React.FC<ButtonProps> = function (props) {
     <button
       className={clz}
       disabled={disabled}
-      style={_style}
       onClick={_onClick}
       {...others}
     >

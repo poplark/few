@@ -1,0 +1,43 @@
+.button {
+  &.is-link {
+    background-color: transparent;
+    font-weight: $weight-normal;
+    color: $link;
+    text-decoration: $link-decoration;
+    box-shadow: none;
+
+    &:hover {
+      background-color: transparent;
+      color: $link-hover;
+      text-decoration: $link-hover-decoration;
+    }
+    &.focus,
+    &:focus {
+      color: $link-focus;
+      text-decoration: $link-hover-decoration;
+
+      &:not(:active) {
+        box-shadow: none;
+      }
+    }
+    &.active,
+    &:active {
+      background-color: transparent;
+      color: $link-active;
+      text-decoration: $link-hover-decoration;
+    }
+    &.disabled,
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &.disabled,
+  &[disabled] {
+    cursor: not-allowed;
+    box-shadow: none;
+    > * {
+      pointer-events: none;
+    }
+  }
+}

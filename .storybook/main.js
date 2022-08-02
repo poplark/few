@@ -20,8 +20,8 @@ module.exports = {
 
     // Make whatever fine-grained changes you need
     config.module.rules.push({
-      test: /\.less$/,
-      use: ['style-loader', 'css-loader', 'less-loader'],
+      test: /\.s(a|c)ss$/,
+      use: ['style-loader', 'css-loader', 'sass-loader'],
       include: path.resolve(__dirname, '../'),
     });
 

@@ -28,7 +28,7 @@ interface IButtonProps {
   onClick?: () => void;
 }
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & IButtonProps;
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & React.AnchorHTMLAttributes<HTMLAnchorElement> & IButtonProps;
 
 const Button: React.FC<ButtonProps> = function(props) {
   const { kind, size, state, disabled, href, children, ...others } = props;
@@ -88,12 +88,10 @@ const Button: React.FC<ButtonProps> = function(props) {
   const clz = Classnames('button', kClz, sClz, stClz, dClz);
 
   if (kind === 'link' && !!href) {
-    // todo - render anchor
+    return <a className={clz} href={href} {...others}>{children}</a>;
   }
 
-  return (
-    <button className={clz} {...others}>{children}</button>
-  )
+  return <button className={clz} {...others}>{children}</button>;
 };
 
 Button.displayName = 'Button';

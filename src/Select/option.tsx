@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { SelectContext } from './context';
 
-interface OptionProps {
+type OptionProps = React.OptionHTMLAttributes<HTMLOptionElement>;
+
+export const Option: React.FC<OptionProps> = (props) => {
+  const { children, ...others } = props;
+
+  const ctx = useContext(SelectContext);
+
+  console.log('select::option:: ', ctx.size);
+
+  return <option {...others}>{children}</option>;
 }
 
-const Option = (props: OptionProps): JSX.Element => {
-  return <option></option>;
-}
+Option.displayName = 'Option';
 
 export function isOption(children: any): boolean {
   if (React.isValidElement(children) && children instanceof Option) {

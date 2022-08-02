@@ -1,9 +1,9 @@
 /**
- * lg - 较大
- * md - 中等
- * nm - 常规
- * sm - 较小
+ * large - 较大
+ * medium - 中等
+ * normal - 常规
+ * small - 较小
  */
-type SizeType = 'lg' | 'md' | 'nm' | 'sm';
+type SizeType = 'large' | 'medium' | 'normal' | 'small';
 
 export default SizeType;

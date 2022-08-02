@@ -1,32 +1,24 @@
 import React from 'react';
 import Classnames from 'classnames';
+import ColorType from '../config/color-type';
 import SizeType from '../config/size-type';
-
-type ButtonKind =
-  | 'default'
-  | 'primary'
-  | 'link'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger';
-type ButtonState = 'hover' | 'focus' | 'active' | 'loading';
+import StateType from '../config/state-type';
 
 interface IButtonProps {
   /**
-   * button 类型，默认 'default'
+   * button 类型，默认 'primary'
    */
-  kind?: ButtonKind;
+  kind?: ColorType;
   /**
-   * button 大小，默认 'nm'
+   * button 大小，默认 'normal'
    */
   size?: SizeType;
   /**
    * button 状态
    */
-  state?: ButtonState;
+  state?: StateType;
   /**
-   * type 为 link 时有效
+   * kind 为 link 时有效
    */
   href?: string;
   /**
@@ -53,37 +45,27 @@ const Button: React.FC<ButtonProps> = function (props) {
     ...others
   } = props;
 
-  let kClz = 'default';
+  let kClz = '';
   switch (kind) {
     case 'primary':
-      kClz = 'is-primary';
-      break;
     case 'info':
-      kClz = 'is-info';
-      break;
     case 'success':
-      kClz = 'is-success';
-      break;
     case 'warning':
-      kClz = 'is-warning';
-      break;
     case 'danger':
-      kClz = 'is-danger';
-      break;
     case 'link':
-      kClz = 'is-link';
+      kClz = `is-${kind}`;
       break;
     default:
       break;
   }
 
-  let sClz = 'md';
+  let sClz = 'is-normal';
   switch (size) {
-    case 'lg':
-      sClz = 'lg';
-      break;
-    case 'sm':
-      sClz = 'sm';
+    case 'large':
+    case 'medium':
+    case 'normal':
+    case 'small':
+      sClz = `is-${size}`;
       break;
     default:
       break;
@@ -91,16 +73,12 @@ const Button: React.FC<ButtonProps> = function (props) {
   let stClz = '';
   switch (state) {
     case 'active':
-      stClz = 'is-active';
-      break;
-    case 'hover':
-      stClz = 'is-hovered';
-      break;
-    case 'focus':
-      stClz = 'is-focused';
-      break;
+    case 'hovered':
+    case 'focused':
     case 'loading':
-      stClz = 'is-loading';
+      stClz = `is-${state}`;
+      break;
+    default:
       break;
   }
   let dClz = disabled ? 'disabled' : '';
@@ -144,8 +122,8 @@ const Button: React.FC<ButtonProps> = function (props) {
 Button.displayName = 'Button';
 
 Button.defaultProps = {
-  kind: 'default',
-  size: 'nm',
+  kind: 'primary',
+  size: 'normal',
   onClick: () => {},
 };
 

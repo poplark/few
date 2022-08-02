@@ -22,7 +22,7 @@ export const Dynamic: ComponentStory<typeof Button> = (args) => (
 );
 Dynamic.args = {
   kind: 'primary',
-  size: 'lg',
+  size: 'large',
   disabled: false,
   href: '',
   target: '_blank',

@@ -25,15 +25,14 @@ interface IButtonProps {
   /**
    * 点击事件处理函数，可选
    */
-  onClick?: () => void;
+  onClick?: (evt: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 }
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & React.AnchorHTMLAttributes<HTMLAnchorElement> & IButtonProps;
 
 const Button: React.FC<ButtonProps> = function(props) {
-  const { kind, size, state, disabled, href, children, ...others } = props;
+  const { kind, size, state, disabled, href, onClick, children, style, ...others } = props;
 
-  console.log('button props:: ', kind, size, state, disabled, href, children);
   let kClz = 'default';
   switch (kind) {
     case 'primary':
@@ -87,11 +86,21 @@ const Button: React.FC<ButtonProps> = function(props) {
   let dClz = disabled ? 'disabled' : '';
   const clz = Classnames('button', kClz, sClz, stClz, dClz);
 
+  const _onClick = React.useCallback((evt: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>): void => {
+    evt.stopPropagation();
+    if (!disabled) {
+      onClick && onClick(evt);
+    }
+  }, [disabled, onClick]);
+
+  const _style: React.CSSProperties = Object.assign({}, style);
+  if (disabled) _style.pointerEvents = 'none';
+
   if (kind === 'link' && !!href) {
-    return <a className={clz} href={href} {...others}>{children}</a>;
+    return <a className={clz} href={href} style={_style} onClick={_onClick} {...others}>{children}</a>;
   }
 
-  return <button className={clz} {...others}>{children}</button>;
+  return <button className={clz} disabled={disabled} style={_style} onClick={_onClick} {...others}>{children}</button>;
 };
 
 Button.displayName = 'Button';

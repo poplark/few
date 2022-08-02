@@ -21,5 +21,9 @@ Dynamic .args = {
   size: 'lg',
   disabled: false,
   href: '',
+  target: '_blank',
+  onClick: (evt) => {
+    console.log('button is clicked ', evt.target);
+  }
 };
 Dynamic.storyName = '动态示例';

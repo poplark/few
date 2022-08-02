@@ -4,36 +4,31 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    app: path.join(__dirname, 'public/index.tsx')
+    app: path.join(__dirname, 'public/index.tsx'),
   },
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx']
+    extensions: ['.js', '.ts', '.jsx', '.tsx'],
   },
   module: {
     rules: [
       {
         test: /\.(j|t)sx?$/,
         exclude: /node_modules/,
-        use: [
-          'babel-loader'
-        ]
-      }, {
+        use: ['babel-loader'],
+      },
+      {
         test: /\.less$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'less-loader'
-        ]
-      }
-    ]
+        use: ['style-loader', 'css-loader', 'less-loader'],
+      },
+    ],
   },
   plugins: [
     // new HtmlWebpackPlugin()
     new HtmlWebpackPlugin({
       template: path.join(__dirname, './public/index.html'),
-    })
+    }),
   ],
   devServer: {
     hot: true,
-  }
-}
+  },
+};

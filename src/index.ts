@@ -1,6 +1,1 @@
-import { ButtonProps, Button } from './Button';
-
-export {
-  ButtonProps,
-  Button
-}
+export { Button } from './Button/button';

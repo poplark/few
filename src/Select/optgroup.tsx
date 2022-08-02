@@ -6,9 +6,10 @@ export type OptgroupProps = React.OptgroupHTMLAttributes<HTMLOptGroupElement>;
 
 export const Optgroup: React.FC<OptgroupProps> = (props: OptgroupProps): JSX.Element => {
   const { children, ...others } = props;
-  if (!isOption(children)) {
-    throw new Error('options in optgroup is invalid!');
-  }
+
+  // if (!isOption(children)) {
+  //   throw new Error('options in optgroup is invalid!');
+  // }
 
   const ctx = useContext(SelectContext);
 

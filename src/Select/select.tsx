@@ -29,9 +29,9 @@ const InnerSelect = (props: SelectProps, ref: React.ForwardedRef<HTMLSelectEleme
   const _ref = ref || createRef<HTMLSelectElement>();
 
   // check children is option or optgroup
-  if (!isOptgroup(children) || !isOption(children)) {
-    throw new Error('option or optgroup are invalid.');
-  }
+  // if (!isOptgroup(children) || !isOption(children)) {
+  //   throw new Error('option or optgroup are invalid.');
+  // }
 
   const kClz = getColorClass(color);
   const sClz = getSizeClass(iSize) || 'is-normal';

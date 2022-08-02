@@ -1,8 +1,8 @@
 import React from 'react';
 import Classnames from 'classnames';
-import ColorType from '../config/color-type';
-import SizeType from '../config/size-type';
-import StateType from '../config/state-type';
+import { ColorType, getColorClass } from '../config/color-type';
+import { SizeType, getSizeClass } from '../config/size-type';
+import { StateType, getStateClass } from '../config/state-type';
 
 interface IButtonProps {
   /**
@@ -45,43 +45,10 @@ const Button: React.FC<ButtonProps> = function (props) {
     ...others
   } = props;
 
-  let kClz = '';
-  switch (kind) {
-    case 'primary':
-    case 'info':
-    case 'success':
-    case 'warning':
-    case 'danger':
-    case 'link':
-      kClz = `is-${kind}`;
-      break;
-    default:
-      break;
-  }
-
-  let sClz = 'is-normal';
-  switch (size) {
-    case 'large':
-    case 'medium':
-    case 'normal':
-    case 'small':
-      sClz = `is-${size}`;
-      break;
-    default:
-      break;
-  }
-  let stClz = '';
-  switch (state) {
-    case 'active':
-    case 'hovered':
-    case 'focused':
-    case 'loading':
-      stClz = `is-${state}`;
-      break;
-    default:
-      break;
-  }
-  let dClz = disabled ? 'disabled' : '';
+  const kClz = getColorClass(kind) || 'is-primary';
+  const sClz = getSizeClass(size) || 'is-normal';
+  const stClz = getStateClass(state);
+  const dClz = disabled ? 'disabled' : '';
   const clz = Classnames('button', kClz, sClz, stClz, dClz);
 
   const _onClick = React.useCallback(

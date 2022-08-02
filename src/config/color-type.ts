@@ -6,6 +6,21 @@
  * warning - 警告色
  * danger - 危险色
  */
- type ColorType = 'primary' | 'link' | 'info' | 'success' | 'warning' | 'danger';
+export type ColorType = 'primary' | 'link' | 'info' | 'success' | 'warning' | 'danger';
 
- export default ColorType;
+export function getColorClass(state?: ColorType): string {
+  let clz = '';
+  switch (state) {
+    case 'primary':
+    case 'link':
+    case 'info':
+    case 'success':
+    case 'warning':
+    case 'danger':
+      clz = `is-${state}`;
+      break;
+    default:
+      break;
+  }
+  return clz;
+}

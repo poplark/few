@@ -4,6 +4,19 @@
  * normal - 常规
  * small - 较小
  */
-type SizeType = 'large' | 'medium' | 'normal' | 'small';
+export type SizeType = 'large' | 'medium' | 'normal' | 'small';
 
-export default SizeType;
+export function getSizeClass(state?: SizeType): string {
+  let clz = '';
+  switch (state) {
+    case 'large':
+    case 'medium':
+    case 'normal':
+    case 'small':
+      clz = `is-${state}`;
+      break;
+    default:
+      break;
+  }
+  return clz;
+}

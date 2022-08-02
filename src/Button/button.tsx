@@ -11,17 +11,13 @@ interface IButtonProps {
    */
   kind?: ButtonKind;
   /**
-   * button 状态
-   */
-  state?: ButtonState;
-  /**
    * button 大小，默认 'nm'
    */
   size?: SizeType;
   /**
-   * 是否禁用
+   * button 状态
    */
-  disabled?: boolean;
+  state?: ButtonState;
   /**
    * type 为 link 时有效
    */
@@ -105,7 +101,6 @@ Button.displayName = 'Button';
 Button.defaultProps = {
   kind: 'default',
   size: 'nm',
-  disabled: false,
   onClick: () => {},
 }
 

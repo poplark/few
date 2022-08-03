@@ -28,15 +28,19 @@ Static.storyName = '静态示例';
 export const Dynamic: ComponentStory<typeof Menu> = (args) => {
   const { onClick, ...others } = args;
   const _onClick = (e: React.MouseEvent, k: string) => {
-    console.log('Menu::onClick:: ', e, k)
+    console.log('Menu::onClick:: ', e);
+    console.log(`Menu::clicked:: menu-${k}`);
   }
   return (
     <Menu {...others} onClick={_onClick}>
-      <MenuItem key="1" disabled>第一个</MenuItem>
+      <MenuItem key="1">第一个</MenuItem>
       <MenuItem key="2" active>第二个</MenuItem>
-      <MenuItem key="3">第三个</MenuItem>
+      <MenuItem key="3" disabled>第三个</MenuItem>
+      <MenuItem key="4">第三个</MenuItem>
     </Menu>
   )
 };
-Dynamic.args = { };
+Dynamic.args = {
+  label: '菜单栏'
+};
 Dynamic.storyName = '动态示例';

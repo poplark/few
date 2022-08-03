@@ -1,5 +1,6 @@
 import React from 'react';
 import Classnames from 'classnames';
+import { MenuItem } from './menu-item';
 
 interface MenuProps {
   label?: string;
@@ -11,18 +12,26 @@ export const Menu: React.FC<React.PropsWithChildren<MenuProps>> = (props) => {
   const { label, className, onClick, children, ...others } = props;
   const clz = Classnames(className, 'menu');
 
-  const renderLabel = (label?: string): JSX.Element | null => {
-    if (label) {
-      return <p className="menu-label">{label}</p>;
+  const renderChild = (child: React.ReactNode): React.ReactNode => {
+    if (React.isValidElement(child) && child.type === MenuItem) {
+      const { props, key } = child;
+      const originalOnClick = props.onClick;
+      const _onClick = (evt: React.MouseEvent): void => {
+        if (!props.disabled && !props.active) {
+          originalOnClick && originalOnClick(evt);
+          onClick && onClick(evt, `${key}`);
+        }
+      }
+      return React.cloneElement(child, Object.assign({}, props, { onClick: _onClick }));
     }
-    return null;
+    return child;
   }
 
   return (
     <div className={clz} {...others}>
-      { renderLabel(label) }
+      { label ? <p className="menu-label">{label}</p> : null }
       <ul className="menu-list">
-        { children }
+        { React.Children.map(children, renderChild) }
       </ul>
     </div>
   )

@@ -1,0 +1,8 @@
+.menu-list {
+  a.disabled,
+  a[disabled] {
+    background-color: $white;
+    color: $grey;
+    cursor: not-allowed;
+  }
+}

@@ -26,17 +26,17 @@ export const Static: ComponentStory<typeof Menu> = () => {
 Static.storyName = '静态示例';
 
 export const Dynamic: ComponentStory<typeof Menu> = (args) => {
+  const [active, setActive] = React.useState('2');
   const { onClick, ...others } = args;
   const _onClick = (e: React.MouseEvent, k: string) => {
-    console.log('Menu::onClick:: ', e);
-    console.log(`Menu::clicked:: menu-${k}`);
+    setActive(k);
   }
   return (
     <Menu {...others} onClick={_onClick}>
-      <MenuItem key="1">第一个</MenuItem>
-      <MenuItem key="2" active>第二个</MenuItem>
-      <MenuItem key="3" disabled>第三个</MenuItem>
-      <MenuItem key="4">第三个</MenuItem>
+      <MenuItem key="1" active={active==='1'}>第一个</MenuItem>
+      <MenuItem key="2" active={active==='2'}>第二个</MenuItem>
+      <MenuItem key="3" active={active==='3'} disabled>第三个</MenuItem>
+      <MenuItem key="4" active={active==='4'}>第四个</MenuItem>
     </Menu>
   )
 };

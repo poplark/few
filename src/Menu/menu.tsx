@@ -17,7 +17,7 @@ export const Menu: React.FC<React.PropsWithChildren<MenuProps>> = (props) => {
       const { props, key } = child;
       const originalOnClick = props.onClick;
       const _onClick = (evt: React.MouseEvent): void => {
-        if (!props.disabled && !props.active) {
+        if (!props.disabled) {
           originalOnClick && originalOnClick(evt);
           onClick && onClick(evt, `${key}`);
         }
@@ -27,6 +27,7 @@ export const Menu: React.FC<React.PropsWithChildren<MenuProps>> = (props) => {
     return child;
   }
 
+  console.log('Menu::render::');
   return (
     <div className={clz} {...others}>
       { label ? <p className="menu-label">{label}</p> : null }

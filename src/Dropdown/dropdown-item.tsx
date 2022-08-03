@@ -1,21 +1,22 @@
 import React from 'react';
 import Classnames from 'classnames';
 
-interface IDropdownItemProps {
+export interface DropdownItemProps {
+  label: string;
   active?: boolean;
 }
 
-export type DropdownItemProps = React.OptionHTMLAttributes<HTMLOptionElement> & IDropdownItemProps;
+export type DropdownItemSchema = DropdownItemProps & { key: string };
 
 export const DropdownItem: React.FC<DropdownItemProps> = (props) => {
-  const { active, children, ...others } = props;
+  const { label, active, ...others } = props;
   console.log("DropdownItem::props:: ", others);
 
   const clz = Classnames('dropdown-item', { 'is-active': active });
   return (
-    <li className={clz}>
-      {children}
-    </li>
+    <a className={clz} {...others}>
+      {label}
+    </a>
   )
 };
 

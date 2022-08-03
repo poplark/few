@@ -17,43 +17,53 @@ export default {
 
 export const Static: ComponentStory<typeof Dropdown> = () => {
   const items = [
-    <DropdownItem key="1">第一个</DropdownItem>,
-    <DropdownItem key="2">第二个</DropdownItem>,
-    <DropdownItem key="3">第三个</DropdownItem>,
+    {
+      key: '1',
+      label: '第一个',
+      active: false,
+    }, {
+      key: '2',
+      label: '第二个',
+      active: false,
+    }, {
+      key: '3',
+      label: '第三个',
+      active: false,
+    }
   ]
   return (
-    <Dropdown items={items}>
+    <Dropdown items={items} active={true}>
       <Button>显示下拉框</Button>
     </Dropdown>
   )
 }
 Static.storyName = '静态示例';
 
-/*
-export const Dynamic: ComponentStory<typeof Select> = (args) => {
-  const [value, setValue] = React.useState('init value');
-  const onChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log('demo::select::onChange::', evt.target.value);
-    setValue(evt.target.value);
-  }
+export const Dynamic: ComponentStory<typeof Dropdown> = (args) => {
+  const { items, ...others } = args;
+  const _items = [
+    {
+      key: '1',
+      label: '第一个',
+      active: false,
+    }, {
+      key: '2',
+      label: '第二个',
+      active: false,
+    }, {
+      key: '3',
+      label: '第三个',
+      active: false,
+    }
+  ];
   return (
-    <Select value={value} onChange={onChange} {...args}>
-      <Optgroup label="第一组">
-        <Option>第一个</Option>
-        <Option>第二个</Option>
-      </Optgroup>
-      <Optgroup label="第二组">
-        <Option>第一个</Option>
-        <Option>第二个</Option>
-      </Optgroup>
-    </Select>
+    <Dropdown items={_items} {...others}>
+      <Button>显示下拉框</Button>
+    </Dropdown>
   )
 };
 Dynamic.args = {
-  color: 'primary',
-  iSize: 'large',
-  disabled: false,
-  defaultValue: 'holder',
+  active: false,
+  trigger: 'click',
 };
 Dynamic.storyName = '动态示例';
-*/

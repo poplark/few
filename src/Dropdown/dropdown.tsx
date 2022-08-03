@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import Classnames from 'classnames';
 import { Button } from '../Button';
 import { DropdownItem, DropdownItemSchema } from './dropdown-item';
@@ -16,26 +16,50 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
   const { active, trigger, items, children } = props;
   console.log('Dropdown::props::', active, trigger, items);
 
-  for (const item of items || []) {
-    console.log('items::item::', item);
-  }
   const ctx = useDropdownContext(!!active);
 
   const open = (evt: React.MouseEvent): void => {
-    console.log('Dropdown::open::', evt.type);
     if (ctx.active) return;
     if (evt.type === trigger ||(evt.type === 'mouseenter' && trigger === 'hover')) {
       ctx.triggerActive(true);
     }
-  }
+  };
   const close = (evt: React.MouseEvent): void => {
-    console.log('Dropdown::close::', evt.type);
     if (!ctx.active) return;
     if (evt.type === 'mouseleave' && trigger === 'hover') {
       ctx.triggerActive(false);
     }
+  };
+
+  let _children = children;
+  if (React.isValidElement(children)) {
+    const { onClick, ...others } = children.props;
+    const _onClick = (evt: React.MouseEvent) => {
+      onClick && onClick(evt);
+      open(evt);
+      // 阻止原生事件的冒泡，防止触发后面 document 对 click 事件监听
+      // 但如果页面中已经打开了其他的 dropdown，那么也无法触发那个 dropdown 的关闭了
+      // todo -------- 咋办？
+      evt.nativeEvent.stopImmediatePropagation();
+    }
+    _children = React.cloneElement(children, {onClick: _onClick, ...others});
   }
-  // todo - 监听 document，点击其他区域时隐藏下拉框
+
+  const ref = useRef(_children);
+  useEffect(() => {
+    if (trigger !== 'click') return;
+    const clickHandler = (evt: MouseEvent): void => {
+      // todo - 似乎没用，ref.current 为 ReactNode 肯定不和 evt.target 相同
+      console.log('Dropdown::hide::', ref.current);
+      if (ref.current !== evt.target) {
+        ctx.triggerActive(false);
+      }
+    }
+    document.addEventListener('click', clickHandler);
+    return () => {
+      document.removeEventListener('click', clickHandler);
+    }
+  }, [trigger]);
 
   const clz = Classnames('dropdown', {'is-active': ctx.active});
 
@@ -44,7 +68,7 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
     <DropdownContext.Provider value={ctx}>
       <div className={clz} onMouseEnter={open} onMouseLeave={close}>
         <div className="dropdown-trigger" onClick={open}>
-          {children}
+          {_children}
         </div>
         <div className="dropdown-menu">
           <div className="dropdown-content">

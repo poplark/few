@@ -53,7 +53,7 @@ const Button: React.FC<ButtonProps> = function (props) {
 
   const _onClick = React.useCallback(
     (evt: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>): void => {
-      evt.stopPropagation();
+      // evt.stopPropagation();
       if (!disabled) {
         onClick && onClick(evt);
       }

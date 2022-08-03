@@ -10,7 +10,6 @@ export type DropdownItemSchema = DropdownItemProps & { key: string };
 
 export const DropdownItem: React.FC<DropdownItemProps> = (props) => {
   const { label, active, ...others } = props;
-  console.log("DropdownItem::props:: ", others);
 
   const clz = Classnames('dropdown-item', { 'is-active': active });
   return (

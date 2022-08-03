@@ -1,20 +1,19 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import Classnames from 'classnames';
-import { Button } from '../Button';
-import { DropdownItem, DropdownItemSchema } from './dropdown-item';
+import { DropdownTrigger } from './dropdown-trigger';
+import { DropdownContent } from './dropdown-content';
 import { DropdownContext, useDropdownContext } from './context';
 
 interface IDropdownProps {
   active?: boolean;
   trigger?: 'click' | 'hover';
-  items: Array<DropdownItemSchema>;
 }
 
 export type DropdownProps = React.HTMLAttributes<HTMLElement> & IDropdownProps
 
 export const Dropdown: React.FC<DropdownProps> = (props) => {
-  const { active, trigger, items, children } = props;
-  console.log('Dropdown::props::', active, trigger, items);
+  const { active, trigger, children } = props;
+  console.log('Dropdown::props::', active, trigger);
 
   const ctx = useDropdownContext(!!active);
 
@@ -63,20 +62,33 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
 
   const clz = Classnames('dropdown', {'is-active': ctx.active});
 
+  const { dropdownTrigger, dropdownContent } = React.useMemo(() => {
+    let dropdownTrigger = null;
+    let dropdownContent = null;
+    React.Children.forEach(children, (child) => {
+      if (!React.isValidElement(child)) {
+        console.warn('Only DropdownTrigger and DropdownContent can be includes, unsupported node: ', child);
+        return;
+      }
+      if (child.type === DropdownTrigger) {
+        // 为 trigger 绑定 onClick 事件，以此来点击显示下拉框
+        dropdownTrigger = React.cloneElement(child, Object.assign({}, child.props, {onClick: open}));
+      } else if (child.type === DropdownContent) {
+        dropdownContent = child;
+      } else {
+        console.warn('Only DropdownTrigger and DropdownContent can be includes, unsupported element: ', child);
+      }
+    });
+    return { dropdownTrigger, dropdownContent };
+  }, [children]);
+
   console.log('Dropdown::render::');
+
   return (
     <DropdownContext.Provider value={ctx}>
       <div className={clz} onMouseEnter={open} onMouseLeave={close}>
-        <div className="dropdown-trigger" onClick={open}>
-          {_children}
-        </div>
-        <div className="dropdown-menu">
-          <div className="dropdown-content">
-            {
-              items.map((item) => (<DropdownItem {...item}/>))
-            }
-          </div>
-        </div>
+        {dropdownTrigger}
+        {dropdownContent}
       </div>
     </DropdownContext.Provider>
   )

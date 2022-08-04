@@ -21,8 +21,8 @@ export const Dynamic: ComponentStory<typeof Button> = (args) => (
   <Button {...args}>Button</Button>
 );
 Dynamic.args = {
-  kind: 'primary',
-  size: 'large',
+  // kind: 'default',
+  size: 'normal',
   disabled: false,
   href: '',
   target: '_blank',

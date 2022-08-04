@@ -6,9 +6,9 @@ import { StateType, getStateClass } from '../config/state-type';
 
 interface IButtonProps {
   /**
-   * button 类型，默认 'primary'
+   * button 类型，默认 'default'
    */
-  kind?: ColorType;
+  kind?: ColorType | 'default';
   /**
    * button 大小，默认 'normal'
    */
@@ -45,7 +45,7 @@ const Button: React.FC<ButtonProps> = function (props) {
     ...others
   } = props;
 
-  const kClz = getColorClass(kind) || 'is-primary';
+  const kClz = getColorClass(kind as ColorType) || '';
   const sClz = getSizeClass(size) || 'is-normal';
   const stClz = getStateClass(state);
   const dClz = disabled ? 'disabled' : '';
@@ -89,7 +89,7 @@ const Button: React.FC<ButtonProps> = function (props) {
 Button.displayName = 'Button';
 
 Button.defaultProps = {
-  kind: 'primary',
+  kind: 'default',
   size: 'normal',
   onClick: () => {},
 };

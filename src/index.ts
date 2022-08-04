@@ -1,1 +1,4 @@
-export { Button } from './Button/button';
+export * from './Button';
+export * from './Dropdown';
+export * from './Input';
+export * from './Menu';

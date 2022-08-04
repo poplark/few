@@ -1,7 +1,7 @@
 import React from 'react';
 import Classnames from 'classnames';
 
-interface DropdownContentProps {
+export interface DropdownContentProps {
   className?: string;
 }
 

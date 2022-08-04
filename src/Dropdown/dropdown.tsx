@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import Classnames from 'classnames';
-import { DropdownTrigger } from './dropdown-trigger';
-import { DropdownContent } from './dropdown-content';
+import { DropdownTrigger, DropdownTriggerProps } from './dropdown-trigger';
+import { DropdownContent, DropdownContentProps } from './dropdown-content';
 import { DropdownContext, useDropdownContext } from './context';
 
 interface IDropdownProps {
@@ -32,21 +32,22 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
   const triggerContainerRef = useRef<HTMLDivElement>();
   // todo - 有必要用 memo 吗？？没必要，因为不起作用。那么怎么优化才能让 Content 不做多余的渲染呢？？
   // const { dropdownTrigger } = React.useMemo(() => {
-  let dropdownTrigger = null;
-  let dropdownContent = null;
+  let dropdownTrigger: React.ReactElement<DropdownTriggerProps> | undefined;
+  let dropdownContent: React.ReactElement<DropdownContentProps> | undefined;
   React.Children.forEach(children, (child) => {
     if (!React.isValidElement(child)) {
       console.warn('Only DropdownTrigger and DropdownContent can be includes, unsupported node: ', child);
     } else if (child.type === DropdownTrigger) {
-      const originalOnClick = props.onClick;
-      const _onClick = (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      const { props: triggerProps } = child as React.ReactElement<DropdownTriggerProps>;
+      const originalOnClick = triggerProps.onClick;
+      const _onClick = (evt: React.MouseEvent) => {
         originalOnClick && originalOnClick(evt);
         open(evt);
       }
       // 为 trigger 绑定 onClick 事件，以此来点击显示下拉框
-      dropdownTrigger = React.cloneElement(child, Object.assign({}, child.props, {ref: triggerContainerRef, onClick: _onClick}));
+      dropdownTrigger = React.cloneElement<DropdownTriggerProps>(child, Object.assign({}, triggerProps, {ref: triggerContainerRef, onClick: _onClick}));
     } else if (child.type === DropdownContent) {
-      dropdownContent = child;
+      dropdownContent = child as React.ReactElement<DropdownContentProps>;
     } else {
       console.warn('Only DropdownTrigger and DropdownContent can be includes, unsupported element: ', child);
     }

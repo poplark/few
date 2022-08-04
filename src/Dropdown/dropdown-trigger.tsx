@@ -1,8 +1,9 @@
 import React from 'react';
 import Classnames from 'classnames';
 
-interface DropdownTriggerProps {
+export interface DropdownTriggerProps {
   className?: string;
+  onClick?: (evt: React.MouseEvent) => void;
 }
 
 const InnerDropdownTrigger: React.ForwardRefRenderFunction<HTMLDivElement, React.PropsWithChildren<DropdownTriggerProps>> = (props, ref) => {
@@ -21,3 +22,6 @@ const InnerDropdownTrigger: React.ForwardRefRenderFunction<HTMLDivElement, React
 export const DropdownTrigger = React.forwardRef(InnerDropdownTrigger);
 
 DropdownTrigger.displayName = 'DropdownTrigger';
+DropdownTrigger.defaultProps = {
+  onClick: () => {}
+}

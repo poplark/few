@@ -17,28 +17,24 @@ export default {
 
 export const Static: ComponentStory<typeof Select> = () => (
   <Select>
-    <Option>第一个</Option>
-    <Option>第二个</Option>
+    <Option key='1' value={1} title='第一个'></Option>
+    <Option key='2' value={2} title='第二个'></Option>
   </Select>
 );
 Static.storyName = '静态示例';
 
 export const Dynamic: ComponentStory<typeof Select> = (args) => {
   const [value, setValue] = React.useState('init value');
-  const onChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log('demo::select::onChange::', evt.target.value);
-    setValue(evt.target.value);
+  const onChange = (value: string) => {
+    console.log('demo::select::onChange::', value);
+    setValue(value);
   }
   return (
     <Select value={value} onChange={onChange} {...args}>
-      <Optgroup label="第一组">
-        <Option>第一个</Option>
-        <Option>第二个</Option>
-      </Optgroup>
-      <Optgroup label="第二组">
-        <Option>第一个</Option>
-        <Option>第二个</Option>
-      </Optgroup>
+        <Option key='1' value={1} title='第一个'></Option>
+        <Option key='2' value={2} title='第二个'></Option>
+        <Option key='3' value={3} title='第三个'></Option>
+        <Option key='4' value={4} title='第四个'></Option>
     </Select>
   )
 };

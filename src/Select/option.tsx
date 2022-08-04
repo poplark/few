@@ -1,29 +1,30 @@
 import React, { useContext } from 'react';
+import Classnames from 'classnames';
 import { SelectContext } from './context';
 
-type OptionProps = React.OptionHTMLAttributes<HTMLOptionElement>;
+export interface OptionProps {
+  className?: string;
+  disabled?: boolean;
+  value: string | number;
+  title: string;
+  key: string;
+}
 
 export const Option: React.FC<OptionProps> = (props) => {
-  const { children, ...others } = props;
+  const { className, disabled, value, title, ...others } = props;
 
   const ctx = useContext(SelectContext);
+  const isSelected = !!ctx.selected.find((item) => item.value === value);
+  const clz = Classnames(className, {'disabled': disabled}, {'is-active': isSelected});
 
-  console.log('select::option:: ', ctx.size);
-
-  // todo - 使用 Dropdown 实现 Option
-  return <option {...others}>{children}</option>;
+  return (
+    <li>
+      <a className={clz} {...others}>{title}</a>
+    </li>
+  )
 }
 
 Option.displayName = 'Option';
-
-export function isOption(children: any): boolean {
-  if (React.isValidElement(children) && children instanceof Option) {
-    return true;
-  }
-  for (const child of React.Children.toArray(children)) {
-    if (!React.isValidElement(child) || !(child instanceof Option)) {
-      return false;
-    }
-  }
-  return true;
+Option.defaultProps = {
+  disabled: false,
 }

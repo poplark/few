@@ -27,27 +27,43 @@ interface IInputProps {
   state?: StateType;
 }
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & IInputProps;
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
+  IInputProps;
 
-const InnerInput = (props: InputProps, ref: React.ForwardedRef<HTMLInputElement>): JSX.Element => {
-  const { defaultValue, value, iColor, iSize, state, disabled, onChange, ...others } = props;
+const InnerInput = (
+  props: InputProps,
+  ref: React.ForwardedRef<HTMLInputElement>,
+): JSX.Element => {
+  const {
+    defaultValue,
+    value,
+    iColor,
+    iSize,
+    state,
+    disabled,
+    onChange,
+    ...others
+  } = props;
 
   console.log('input props:: ', defaultValue, value, iSize, state, disabled);
 
   const _ref = ref || React.createRef<HTMLInputElement>();
 
-  const _onChange = React.useCallback((evt: React.ChangeEvent<HTMLInputElement>): void => {
-    if (!disabled) {
-      onChange && onChange(evt);
-    }
-  }, [disabled, onChange]);
+  const _onChange = React.useCallback(
+    (evt: React.ChangeEvent<HTMLInputElement>): void => {
+      if (!disabled) {
+        onChange && onChange(evt);
+      }
+    },
+    [disabled, onChange],
+  );
 
   const [isMounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
     return () => {
       setMounted(false);
-    }
+    };
   }, []);
 
   const kClz = getColorClass(iColor);
@@ -63,12 +79,20 @@ const InnerInput = (props: InputProps, ref: React.ForwardedRef<HTMLInputElement>
     _value = value as string;
   }
 
-  return <input className={clz} value={_value} ref={_ref} onChange={_onChange} {...others}></input>;
-}
+  return (
+    <input
+      className={clz}
+      value={_value}
+      ref={_ref}
+      onChange={_onChange}
+      {...others}
+    ></input>
+  );
+};
 
 export const Input = React.forwardRef(InnerInput);
 
 Input.displayName = 'Input';
 Input.defaultProps = {
   iSize: 'normal',
-}
+};

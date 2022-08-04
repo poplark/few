@@ -15,16 +15,22 @@ export const Option: React.FC<OptionProps> = (props) => {
 
   const ctx = useContext(SelectContext);
   const isSelected = !!ctx.selected.find((item) => item.value === value);
-  const clz = Classnames(className, {'disabled': disabled}, {'is-active': isSelected});
+  const clz = Classnames(
+    className,
+    { disabled: disabled },
+    { 'is-active': isSelected },
+  );
 
   return (
     <li>
-      <a className={clz} {...others}>{title}</a>
+      <a className={clz} {...others}>
+        {title}
+      </a>
     </li>
-  )
-}
+  );
+};
 
 Option.displayName = 'Option';
 Option.defaultProps = {
   disabled: false,
-}
+};

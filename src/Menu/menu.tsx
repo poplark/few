@@ -14,31 +14,35 @@ export const Menu: React.FC<React.PropsWithChildren<MenuProps>> = (props) => {
 
   const renderChild = (child: React.ReactNode): React.ReactNode => {
     if (React.isValidElement(child) && child.type === MenuItem) {
-      const { props, key } = child as React.ReactElement<MenuItemProps, typeof MenuItem>;
+      const { props, key } = child as React.ReactElement<
+        MenuItemProps,
+        typeof MenuItem
+      >;
       const originalOnClick = props.onClick;
       const _onClick = (evt: React.MouseEvent): void => {
         if (!props.disabled) {
           originalOnClick && originalOnClick(evt);
           onClick && onClick(evt, `${key}`);
         }
-      }
-      return React.cloneElement(child, Object.assign({}, props, { onClick: _onClick }));
+      };
+      return React.cloneElement(
+        child,
+        Object.assign({}, props, { onClick: _onClick }),
+      );
     }
     return child;
-  }
+  };
 
   console.log('Menu::render::');
   return (
     <div className={clz} {...others}>
-      { label ? <p className="menu-label">{label}</p> : null }
-      <ul className="menu-list">
-        { React.Children.map(children, renderChild) }
-      </ul>
+      {label ? <p className="menu-label">{label}</p> : null}
+      <ul className="menu-list">{React.Children.map(children, renderChild)}</ul>
     </div>
-  )
-}
+  );
+};
 
 Menu.displayName = 'Menu';
 Menu.defaultProps = {
-  onClick: () => {}
-}
+  onClick: () => {},
+};

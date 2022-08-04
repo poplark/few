@@ -15,7 +15,7 @@ export default {
   // argTypes: {
   //   backgroundColor: { control: 'color' },
   // },
-  subcomponents: { DropdownTrigger, DropdownContent }
+  subcomponents: { DropdownTrigger, DropdownContent },
 } as ComponentMeta<typeof Dropdown>;
 
 export const Static: ComponentStory<typeof Dropdown> = () => {
@@ -32,8 +32,8 @@ export const Static: ComponentStory<typeof Dropdown> = () => {
         </Menu>
       </DropdownContent>
     </Dropdown>
-  )
-}
+  );
+};
 Static.storyName = '静态示例';
 
 export const Dynamic: ComponentStory<typeof Dropdown> = (args) => {
@@ -51,7 +51,7 @@ export const Dynamic: ComponentStory<typeof Dropdown> = (args) => {
         </Menu>
       </DropdownContent>
     </Dropdown>
-  )
+  );
 };
 Dynamic.args = {
   active: false,

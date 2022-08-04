@@ -34,16 +34,8 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   IButtonProps;
 
 const Button: React.FC<ButtonProps> = function (props) {
-  const {
-    kind,
-    size,
-    state,
-    disabled,
-    href,
-    onClick,
-    children,
-    ...others
-  } = props;
+  const { kind, size, state, disabled, href, onClick, children, ...others } =
+    props;
 
   const kClz = getColorClass(kind as ColorType) || '';
   const sClz = getSizeClass(size) || 'is-normal';
@@ -63,24 +55,14 @@ const Button: React.FC<ButtonProps> = function (props) {
 
   if (kind === 'link' && !!href) {
     return (
-      <a
-        className={clz}
-        href={href}
-        onClick={_onClick}
-        {...others}
-      >
+      <a className={clz} href={href} onClick={_onClick} {...others}>
         {children}
       </a>
     );
   }
 
   return (
-    <button
-      className={clz}
-      disabled={disabled}
-      onClick={_onClick}
-      {...others}
-    >
+    <button className={clz} disabled={disabled} onClick={_onClick} {...others}>
       {children}
     </button>
   );

@@ -13,10 +13,13 @@ export const DropdownContext = createContext<IDropdownContext>({
   active: false,
   triggerActive: () => {},
   checked: null,
-  onCheck: () => {}
+  onCheck: () => {},
 });
 
-export function useDropdownContext(initialActive: boolean, initialValue?: CheckedItem): IDropdownContext {
+export function useDropdownContext(
+  initialActive: boolean,
+  initialValue?: CheckedItem,
+): IDropdownContext {
   const [active, setActive] = useState(initialActive);
   const [checked, setChecked] = useState(initialValue);
   useEffect(() => {
@@ -30,5 +33,5 @@ export function useDropdownContext(initialActive: boolean, initialValue?: Checke
   const onCheck = useCallback((value: CheckedItem) => {
     setChecked(value);
   }, []);
-  return {active, triggerActive, checked, onCheck};
+  return { active, triggerActive, checked, onCheck };
 }

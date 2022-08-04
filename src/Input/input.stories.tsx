@@ -20,7 +20,7 @@ export const Dynamic: ComponentStory<typeof Input> = (args) => {
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     console.log('demo::input onchange::', evt.target.value);
     setValue(evt.target.value);
-  }
+  };
   return <Input value={value} onChange={onChange} {...args} />;
 };
 Dynamic.args = {

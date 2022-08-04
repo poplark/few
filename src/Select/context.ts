@@ -28,52 +28,60 @@ interface SelectAction {
   payload?: OptionProps;
 }
 
-export const useSelectContext = (props: SelectContextProps): SelectContextValue => {
+export const useSelectContext = (
+  props: SelectContextProps,
+): SelectContextValue => {
   const { size = 'normal', mode = 'single', values, options = [] } = props;
   const [isSingle] = useState(() => mode !== 'multi');
 
-  const [selected, dispatch] = useReducer((state: OptionProps[], action: SelectAction):  OptionProps[] => {
-    switch (action.type) {
-      case 'replace':
-        state = [action.payload!];
-        break;
-      case 'add':
-        state = state.concat(action.payload!);
-        break;
-      case 'remove':
-        state = state.filter((item) => item.value !== action.payload!.value);
-        break;
-      case 'clear':
-        state = [];
-        break;
-    }
-    return state;
-  }, [], () => {
-    if (isSingle) {
-      return options.filter((option) => option.value === values);
-    } else {
-      return options.filter((option) => (values as (string | number)[] || []).includes(option.value));
-    }
-  });
+  const [selected, dispatch] = useReducer(
+    (state: OptionProps[], action: SelectAction): OptionProps[] => {
+      switch (action.type) {
+        case 'replace':
+          state = [action.payload!];
+          break;
+        case 'add':
+          state = state.concat(action.payload!);
+          break;
+        case 'remove':
+          state = state.filter((item) => item.value !== action.payload!.value);
+          break;
+        case 'clear':
+          state = [];
+          break;
+      }
+      return state;
+    },
+    [],
+    () => {
+      if (isSingle) {
+        return options.filter((option) => option.value === values);
+      } else {
+        return options.filter((option) =>
+          ((values as (string | number)[]) || []).includes(option.value),
+        );
+      }
+    },
+  );
   const onSelect = (val?: OptionProps) => {
     if (val) {
       if (isSingle) {
-        dispatch({type: 'replace', payload: val});
+        dispatch({ type: 'replace', payload: val });
       } else {
         if (selected.find((item) => item.value === val.value)) {
-          dispatch({type: 'remove', payload: val});
+          dispatch({ type: 'remove', payload: val });
         } else {
-          dispatch({type: 'add', payload: val});
+          dispatch({ type: 'add', payload: val });
         }
       }
     } else {
-      dispatch({type: 'clear'});
+      dispatch({ type: 'clear' });
     }
-  }
+  };
 
   return {
     size,
     selected,
     onSelect,
-  }
-}
+  };
+};

@@ -26,8 +26,22 @@ interface SelectProps {
   onChange?: (v: string) => void;
 }
 
-const InnerSelect = (props: React.PropsWithChildren<SelectProps>, ref: React.ForwardedRef<HTMLElement>): JSX.Element => {
-  const { color, iSize, mode ='single', state, disabled, defaultValue, value, children, onChange, ...others } = props;
+const InnerSelect = (
+  props: React.PropsWithChildren<SelectProps>,
+  ref: React.ForwardedRef<HTMLElement>,
+): JSX.Element => {
+  const {
+    color,
+    iSize,
+    mode = 'single',
+    state,
+    disabled,
+    defaultValue,
+    value,
+    children,
+    onChange,
+    ...others
+  } = props;
   const _ref = ref || createRef<HTMLElement>();
 
   const [isSingle] = useState(() => mode !== 'multi');
@@ -52,11 +66,16 @@ const InnerSelect = (props: React.PropsWithChildren<SelectProps>, ref: React.For
   })?.filter((item) => item);
 
   // todo - 取 defaultValue 还是 value
-  const ctx = useSelectContext({size: iSize, mode, values: value || defaultValue, options });
+  const ctx = useSelectContext({
+    size: iSize,
+    mode,
+    values: value || defaultValue,
+    options,
+  });
 
   const renderSelected = (selected: OptionProps[]) => {
     return selected.map((item) => item.title).join('/');
-  }
+  };
 
   const renderChild = (child: React.ReactNode): React.ReactNode => {
     if (React.isValidElement(child) && child.type === Option) {
@@ -68,25 +87,29 @@ const InnerSelect = (props: React.PropsWithChildren<SelectProps>, ref: React.For
           // originalOnClick && originalOnClick(evt);
           ctx.onSelect(props);
           // todo - 在哪里通知外层
-          onChange && onChange(ctx.selected.map((item) => item.value).join('/'));
+          onChange &&
+            onChange(ctx.selected.map((item) => item.value).join('/'));
         }
-      }
-      return React.cloneElement(child, Object.assign({}, props, { onClick: _onClick }));
+      };
+      return React.cloneElement(
+        child,
+        Object.assign({}, props, { onClick: _onClick }),
+      );
     }
     return child;
-  }
+  };
 
   return (
     <SelectContext.Provider value={ctx}>
       <div className={clz} {...others}>
-        <span className='select-bar'>{renderSelected(ctx.selected)}</span>
-        <ul className='select-list'>
-          { React.Children.map(children, renderChild) }
+        <span className="select-bar">{renderSelected(ctx.selected)}</span>
+        <ul className="select-list">
+          {React.Children.map(children, renderChild)}
         </ul>
       </div>
     </SelectContext.Provider>
-  )
-}
+  );
+};
 
 export const Select = React.forwardRef(InnerSelect);
 
@@ -94,4 +117,4 @@ Select.displayName = 'Select';
 Select.defaultProps = {
   color: 'primary',
   iSize: 'normal',
-}
+};

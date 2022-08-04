@@ -5,7 +5,9 @@ export interface DropdownContentProps {
   className?: string;
 }
 
-export const DropdownContent: React.FC<React.PropsWithChildren<DropdownContentProps>> = (props) => {
+export const DropdownContent: React.FC<
+  React.PropsWithChildren<DropdownContentProps>
+> = (props) => {
   const { className, children, ...others } = props;
   const clz = Classnames('dropdown-content', className);
 
@@ -16,7 +18,7 @@ export const DropdownContent: React.FC<React.PropsWithChildren<DropdownContentPr
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
 DropdownContent.displayName = 'DropdownContent';

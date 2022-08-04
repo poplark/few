@@ -24,7 +24,7 @@ export function useDropdownContext(initialActive: boolean, initialValue?: Checke
       setActive(initialActive);
     }
   }, [initialActive]);
-  const triggerActive = useCallback((value: CheckedItem) => {
+  const triggerActive = useCallback((value: boolean) => {
     setActive(value);
   }, []);
   const onCheck = useCallback((value: CheckedItem) => {

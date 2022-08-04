@@ -5,12 +5,17 @@ interface DropdownTriggerProps {
   className?: string;
 }
 
-export const DropdownTrigger: React.FC<React.PropsWithChildren<DropdownTriggerProps>> = (props) => {
+const InnerDropdownTrigger: React.ForwardRefRenderFunction<HTMLDivElement, React.PropsWithChildren<DropdownTriggerProps>> = (props, ref) => {
   const { className, children, ...others } = props;
+  const _ref = ref || React.createRef<HTMLDivElement>();
   const clz = Classnames('dropdown-trigger', className);
   return (
-    <div className={clz} {...others}>
+    <div className={clz} ref={_ref} {...others}>
       {children}
     </div>
   )
 }
+
+export const DropdownTrigger = React.forwardRef(InnerDropdownTrigger);
+
+DropdownTrigger.displayName = 'DropdownTrigger';

@@ -1,11 +1,12 @@
 import React from 'react';
 import Classnames from 'classnames';
 
-interface MenuItemProps {
+export interface MenuItemProps {
   key: string;
   active?: boolean;
   disabled?: boolean;
   className?: string;
+  onClick?: React.MouseEventHandler;
 }
 
 export const MenuItem: React.FC<React.PropsWithChildren<MenuItemProps>> = (props)  => {
@@ -23,4 +24,5 @@ MenuItem.displayName = 'MenuItem';
 MenuItem.defaultProps = {
   active: false,
   disabled: false,
+  onClick: () => {},
 }

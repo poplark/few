@@ -9,6 +9,8 @@ const InnerDropdownTrigger: React.ForwardRefRenderFunction<HTMLDivElement, React
   const { className, children, ...others } = props;
   const _ref = ref || React.createRef<HTMLDivElement>();
   const clz = Classnames('dropdown-trigger', className);
+
+  console.log('DropdownTrigger::render::');
   return (
     <div className={clz} ref={_ref} {...others}>
       {children}

@@ -16,12 +16,12 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
 
   const ctx = useDropdownContext(!!active);
 
-  const open = useCallback((evt: React.MouseEvent): void => {
+  const open = (evt: React.MouseEvent): void => {
     if (ctx.active) return;
     if (evt.type === trigger || (evt.type === 'mouseenter' && trigger === 'hover')) {
       ctx.triggerActive(true);
     }
-  }, [ctx.active, trigger]);
+  };
   const close = (evt: React.MouseEvent): void => {
     if (!ctx.active) return;
     if (evt.type === 'mouseleave' && trigger === 'hover') {
@@ -30,31 +30,29 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
   };
 
   const triggerContainerRef = useRef<HTMLDivElement>();
-  // todo - 有必要用 memo 吗？？
-  const { dropdownTrigger, dropdownContent } = React.useMemo(() => {
-    let dropdownTrigger = null;
-    let dropdownContent = null;
-    React.Children.forEach(children, (child) => {
-      if (!React.isValidElement(child)) {
-        console.warn('Only DropdownTrigger and DropdownContent can be includes, unsupported node: ', child);
-        return;
+  // todo - 有必要用 memo 吗？？没必要，因为不起作用。那么怎么优化才能让 Content 不做多余的渲染呢？？
+  // const { dropdownTrigger } = React.useMemo(() => {
+  let dropdownTrigger = null;
+  let dropdownContent = null;
+  React.Children.forEach(children, (child) => {
+    if (!React.isValidElement(child)) {
+      console.warn('Only DropdownTrigger and DropdownContent can be includes, unsupported node: ', child);
+    } else if (child.type === DropdownTrigger) {
+      const originalOnClick = props.onClick;
+      const _onClick = (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        originalOnClick && originalOnClick(evt);
+        open(evt);
       }
-      if (child.type === DropdownTrigger) {
-        const originalOnClick = props.onClick;
-        const _onClick = (evt: React.MouseEvent<HTMLElement, MouseEvent>) => {
-          originalOnClick && originalOnClick(evt);
-          open(evt);
-        }
-        // 为 trigger 绑定 onClick 事件，以此来点击显示下拉框
-        dropdownTrigger = React.cloneElement(child, Object.assign({}, child.props, {ref: triggerContainerRef, onClick: _onClick}));
-      } else if (child.type === DropdownContent) {
-        dropdownContent = child;
-      } else {
-        console.warn('Only DropdownTrigger and DropdownContent can be includes, unsupported element: ', child);
-      }
-    });
-    return { dropdownTrigger, dropdownContent };
-  }, [children, open]);
+      // 为 trigger 绑定 onClick 事件，以此来点击显示下拉框
+      dropdownTrigger = React.cloneElement(child, Object.assign({}, child.props, {ref: triggerContainerRef, onClick: _onClick}));
+    } else if (child.type === DropdownContent) {
+      dropdownContent = child;
+    } else {
+      console.warn('Only DropdownTrigger and DropdownContent can be includes, unsupported element: ', child);
+    }
+  });
+  //   return { dropdownTrigger };
+  // }, [children, open]);
 
   useEffect(() => {
     const clickHandler = (evt: MouseEvent): void => {

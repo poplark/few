@@ -9,6 +9,7 @@ export const DropdownContent: React.FC<React.PropsWithChildren<DropdownContentPr
   const { className, children, ...others } = props;
   const clz = Classnames('dropdown-content', className);
 
+  console.log('DropdownContent::render::');
   return (
     <div className="dropdown-menu">
       <div className={clz} {...others}>
@@ -17,3 +18,5 @@ export const DropdownContent: React.FC<React.PropsWithChildren<DropdownContentPr
     </div>
   )
 }
+
+DropdownContent.displayName = 'DropdownContent';

@@ -1973,12 +1973,18 @@ export const Static: ComponentStory<typeof Icon> = () => {
       console.error("Unable to write to clipboard. :-(");
     });
   }
+  const [filterIcons, setFilterIcons] = React.useState(icons);
+  function search(evt: React.ChangeEvent<HTMLInputElement>) {
+    const txt = evt.target.value.trim();
+    if (!txt) retusetFilterIcons(icons);
+    setFilterIcons(() => icons.filter((icon) => icon.indexOf(txt) >= 0))
+  }
   return (
     <div>
-      <h3>点击图标复制代码</h3>
+      <h3>点击图标复制代码，输入关键字搜索：<input onChange={search}/></h3>
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
         {
-          icons.map((icon) => {
+          filterIcons.map((icon) => {
             return (
               <div onClick={onClick.bind(null, icon)} title={icon.substring(3)} style={{padding: '0 10px', width: '80px', textAlign: 'center' }} key={icon}>
                 <p>

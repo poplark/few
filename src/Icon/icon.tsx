@@ -1,6 +1,6 @@
 import React from 'react';
 import Classnames from 'classnames';
-import { ColorType, getColorClass } from '../config/color-type';
+import { ColorType } from '../config/color-type';
 import { SizeType, getSizeClass } from '../config/size-type';
 
 export interface IconProps {
@@ -32,8 +32,36 @@ export interface IconProps {
 export const Icon: React.FC<IconProps> = (props) => {
   const { className, type, color, size, spin } = props;
 
-  const oClz = Classnames('icon', className, getColorClass(color), getSizeClass(size));
-  const iClz = Classnames('fas', `fa-${type}`, spin? 'fa-pulse': '');
+  let textColor = '';
+  switch (color) {
+    case 'info':
+    case 'success':
+    case 'warning':
+    case 'danger':
+    case 'primary':
+    case 'link':
+      textColor = `has-text-${color}`;
+      break;
+    default:
+      break;
+  }
+  const oClz = Classnames('icon', className, textColor, getSizeClass(size));
+
+  let faSize = '';
+  switch (size) {
+    case 'small':
+      faSize = 'fa-xs';
+      break;
+    case 'medium':
+      faSize = 'fa-lg';
+      break;
+    case 'large':
+      faSize = 'fa-xl';
+      break;
+    default:
+      break;
+  }
+  const iClz = Classnames('fas', 'fa-border', `fa-${type}`, spin? 'fa-pulse': '', faSize);
   return (
     <span className={oClz}>
       <i className={iClz}></i>

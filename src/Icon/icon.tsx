@@ -24,13 +24,14 @@ export interface IconProps {
    * 大小，默认 normal
    */
   size?: SizeType;
+  onClick?: React.MouseEventHandler;
 }
 
 // todo - icon text
 // todo - material design icon
 // todo - ionicons
 export const Icon: React.FC<IconProps> = (props) => {
-  const { className, type, color, size, spin } = props;
+  const { className, type, color, size, spin, ...others } = props;
 
   let textColor = '';
   switch (color) {
@@ -63,7 +64,7 @@ export const Icon: React.FC<IconProps> = (props) => {
   }
   const iClz = Classnames('fas', `fa-${type}`, spin? 'fa-pulse': '', faSize);
   return (
-    <span className={oClz}>
+    <span className={oClz} {...others}>
       <i className={iClz}></i>
     </span>
   )

@@ -1975,9 +1975,8 @@ export const Static: ComponentStory<typeof Icon> = () => {
   }
   const [filterIcons, setFilterIcons] = React.useState(icons);
   function search(evt: React.ChangeEvent<HTMLInputElement>) {
-    const txt = evt.target.value.trim();
-    if (!txt) retusetFilterIcons(icons);
-    setFilterIcons(() => icons.filter((icon) => icon.indexOf(txt) >= 0))
+    const txt = evt.target.value.trim() || '';
+    setFilterIcons(icons.filter((icon) => icon.indexOf(txt) >= 0))
   }
   return (
     <div>

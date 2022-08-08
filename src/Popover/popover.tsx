@@ -36,7 +36,11 @@ export const Popover: React.FC<PopoverProps> = (props) => {
     ctx.triggerVisible(false);
   };
 
-  const clz = Classnames('dropdown', { 'is-active': ctx.visible });
+  const clz = Classnames('dropdown', {
+    'is-active': ctx.visible,
+    'is-right': ['right', 'rightTop', 'rightBottom', 'bottomRight', 'topRight'].includes(ctx.placement),
+    'is-up': ['top', 'topLeft', 'topRight', 'leftTop', 'rightTop'].includes(ctx.placement),
+  });
 
   console.log('Popover::render::');
 

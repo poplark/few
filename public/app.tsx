@@ -11,8 +11,7 @@ export default function App() {
   const handleClick = () => {
     setV(v + 1);
   };
-  const dropdown = (
-    // const dropdown = React.useMemo(() => (
+  const dropdown = React.useMemo(() => (
     <Dropdown>
       <DropdownTrigger>
         <Button color="default">hi dropdown</Button>
@@ -28,8 +27,7 @@ export default function App() {
         </Menu>
       </DropdownContent>
     </Dropdown>
-    // ), []);
-  );
+  ), []);
   return (
     <div>
       <div>Hello world. v: {v} </div>

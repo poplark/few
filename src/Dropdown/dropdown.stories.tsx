@@ -20,7 +20,7 @@ export default {
 
 export const Static: ComponentStory<typeof Dropdown> = () => {
   return (
-    <Dropdown active={true}>
+    <Dropdown visible={true}>
       <DropdownTrigger>
         <Button>显示下拉框</Button>
       </DropdownTrigger>
@@ -54,7 +54,7 @@ export const Dynamic: ComponentStory<typeof Dropdown> = (args) => {
   );
 };
 Dynamic.args = {
-  active: false,
+  visible: false,
   trigger: 'click',
 };
 Dynamic.storyName = '动态示例';

@@ -1,30 +1,15 @@
 import React from 'react';
-import Classnames from 'classnames';
+import { PopoverTrigger, PopoverTriggerProps } from '../Popover';
 
-export interface DropdownTriggerProps {
-  className?: string;
-  onClick?: (evt: React.MouseEvent) => void;
-}
+export type DropdownTriggerProps = PopoverTriggerProps;
 
-const InnerDropdownTrigger: React.ForwardRefRenderFunction<
-  HTMLDivElement,
-  React.PropsWithChildren<DropdownTriggerProps>
-> = (props, ref) => {
-  const { className, children, ...others } = props;
-  const _ref = ref || React.createRef<HTMLDivElement>();
-  const clz = Classnames('dropdown-trigger', className);
+export const DropdownTrigger: React.FC<React.PropsWithChildren<DropdownTriggerProps>> = (props) => {
+  const { children, ...others } = props;
 
   console.log('DropdownTrigger::render::');
   return (
-    <div className={clz} ref={_ref} {...others}>
-      {children}
-    </div>
+    <PopoverTrigger {...others}>{children}</PopoverTrigger>
   );
-};
-
-export const DropdownTrigger = React.forwardRef(InnerDropdownTrigger);
+}
 
 DropdownTrigger.displayName = 'DropdownTrigger';
-DropdownTrigger.defaultProps = {
-  onClick: () => {},
-};

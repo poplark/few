@@ -1,24 +1,15 @@
 import React from 'react';
-import Classnames from 'classnames';
+import { PopoverContent, PopoverContentProps } from '../Popover';
 
-export interface DropdownContentProps {
-  className?: string;
-}
+export type DropdownContentProps = PopoverContentProps;
 
-export const DropdownContent: React.FC<
-  React.PropsWithChildren<DropdownContentProps>
-> = (props) => {
-  const { className, children, ...others } = props;
-  const clz = Classnames('dropdown-content', className);
+export const DropdownContent: React.FC<React.PropsWithChildren<DropdownContentProps>> = (props) => {
+  const { children, ...others } = props;
 
   console.log('DropdownContent::render::');
   return (
-    <div className="dropdown-menu">
-      <div className={clz} {...others}>
-        {children}
-      </div>
-    </div>
+    <PopoverContent {...others}>{children}</PopoverContent>
   );
-};
+}
 
 DropdownContent.displayName = 'DropdownContent';

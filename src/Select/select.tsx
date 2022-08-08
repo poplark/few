@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState } from 'react';
 import Classnames from 'classnames';
 import { ColorType, getColorClass } from '../config/color-type';
 import { SizeType, getSizeClass } from '../config/size-type';
@@ -10,7 +10,7 @@ import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Menu } from '../Menu';
 
-interface SelectProps {
+export interface SelectProps {
   /**
    * 边框颜色
    */
@@ -31,10 +31,7 @@ interface SelectProps {
   placeholder?: string;
 }
 
-const InnerSelect = (
-  props: React.PropsWithChildren<SelectProps>,
-  ref: React.ForwardedRef<HTMLElement>,
-): JSX.Element => {
+export const Select = (props: React.PropsWithChildren<SelectProps>): JSX.Element => {
   const {
     color,
     iSize,
@@ -44,11 +41,10 @@ const InnerSelect = (
     defaultValue,
     value,
     children,
-    onChange = () => {},
+    onChange,
     placeholder,
     ...others
   } = props;
-  const _ref = ref || createRef<HTMLElement>();
 
   const [isSingle] = useState(() => mode !== 'multi');
   // check children is option or optgroup
@@ -60,7 +56,7 @@ const InnerSelect = (
   const sClz = getSizeClass(iSize) || 'is-normal';
   const stClz = getStateClass(state);
   const dClz = disabled ? 'disabled' : '';
-  const clz = Classnames('select', kClz, sClz, stClz, dClz);
+  const clz = Classnames('select-bar', kClz, sClz, stClz, dClz);
 
   const options = React.Children.map(children, (child) => {
     if (React.isValidElement(child) && child.type === Option) {
@@ -80,15 +76,11 @@ const InnerSelect = (
     onChange,
   });
 
-  const renderSelected = (selected: OptionProps[]) => {
-    return selected.length > 0 ? selected.map((item) => item.title).join('/') : placeholder;
-  };
-
   return (
     <SelectContext.Provider value={ctx}>
       <Popover trigger='click'>
         <PopoverTrigger>
-          <Button className="select-bar">
+          <Button className={clz}>
             {
               ctx.selected.length > 0 ? ctx.selected.map((item) => item.title).join('/') : placeholder
             }
@@ -105,11 +97,9 @@ const InnerSelect = (
   );
 };
 
-export const Select = React.forwardRef(InnerSelect);
-
 Select.displayName = 'Select';
 Select.defaultProps = {
-  color: 'primary',
+  color: 'default',
   iSize: 'normal',
   placeholder: '请选择一项',
 };

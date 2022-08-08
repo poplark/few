@@ -51,6 +51,9 @@ export const useSelectContext = (
           state = [];
           break;
       }
+      // todo - 有没有其他好地方处理这个对外的通知？？？
+      const newValues = state.map((item) => item.value);
+      Promise.resolve().then(() => isSingle ? onChange(newValues[0]) : onChange(newValues));
       return state;
     },
     [],
@@ -65,7 +68,6 @@ export const useSelectContext = (
     },
   );
   const onSelect = (val?: OptionProps) => {
-    const oldValues = selected.map((item) => item.value);
     if (val) {
       if (isSingle) {
         dispatch({ type: 'replace', payload: val });
@@ -79,8 +81,6 @@ export const useSelectContext = (
     } else {
       dispatch({ type: 'clear' });
     }
-    const newValues = selected.map((item) => item.value);
-    onChange(newValues);
   };
 
   return {

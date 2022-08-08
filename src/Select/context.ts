@@ -21,6 +21,7 @@ interface SelectContextProps {
   values?: string | number | (string | number)[];
   options?: OptionProps[];
   mode: 'single' | 'multi';
+  onChange?: (v: string | number | (string | number)[]) => void;
 }
 
 interface SelectAction {
@@ -31,7 +32,7 @@ interface SelectAction {
 export const useSelectContext = (
   props: SelectContextProps,
 ): SelectContextValue => {
-  const { size = 'normal', mode = 'single', values, options = [] } = props;
+  const { size = 'normal', mode = 'single', values, options = [], onChange = () => {} } = props;
   const [isSingle] = useState(() => mode !== 'multi');
 
   const [selected, dispatch] = useReducer(
@@ -64,6 +65,7 @@ export const useSelectContext = (
     },
   );
   const onSelect = (val?: OptionProps) => {
+    const oldValues = selected.map((item) => item.value);
     if (val) {
       if (isSingle) {
         dispatch({ type: 'replace', payload: val });
@@ -77,6 +79,8 @@ export const useSelectContext = (
     } else {
       dispatch({ type: 'clear' });
     }
+    const newValues = selected.map((item) => item.value);
+    onChange(newValues);
   };
 
   return {

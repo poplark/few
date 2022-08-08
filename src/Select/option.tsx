@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import Classnames from 'classnames';
 import { SelectContext } from './context';
+import { MenuItem } from '../Menu';
 
 export interface OptionProps {
   className?: string;
@@ -11,22 +11,20 @@ export interface OptionProps {
 }
 
 export const Option: React.FC<OptionProps> = (props) => {
-  const { className, disabled, value, title, ...others } = props;
+  const { value, title, ...others } = props;
 
   const ctx = useContext(SelectContext);
+
   const isSelected = !!ctx.selected.find((item) => item.value === value);
-  const clz = Classnames(
-    className,
-    { disabled: disabled },
-    { 'is-active': isSelected },
-  );
+  const onSelect = (evt: React.MouseEvent) => {
+    if (props.disabled || isSelected) return;
+    ctx.onSelect(props);
+  }
 
   return (
-    <li>
-      <a className={clz} {...others}>
-        {title}
-      </a>
-    </li>
+    <MenuItem onClick={onSelect} active={isSelected} {...others}>
+      {title}
+    </MenuItem>
   );
 };
 

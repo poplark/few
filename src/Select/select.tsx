@@ -5,6 +5,10 @@ import { SizeType, getSizeClass } from '../config/size-type';
 import { StateType, getStateClass } from '../config/state-type';
 import { SelectContext, useSelectContext } from './context';
 import { Option, OptionProps } from './option';
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
+import { Button } from '../Button';
+import { Icon } from '../Icon';
+import { Menu } from '../Menu';
 
 interface SelectProps {
   /**
@@ -20,10 +24,11 @@ interface SelectProps {
    */
   state?: StateType;
   disabled?: boolean;
-  value?: string | number;
-  defaultValue?: string;
+  value?: string | number | (string | number)[]
+  defaultValue?: string | number | (string | number)[];
   mode?: 'single' | 'multi';
-  onChange?: (v: string) => void;
+  onChange?: (v: string | number | (string | number)[]) => void;
+  placeholder?: string;
 }
 
 const InnerSelect = (
@@ -39,7 +44,8 @@ const InnerSelect = (
     defaultValue,
     value,
     children,
-    onChange,
+    onChange = () => {},
+    placeholder,
     ...others
   } = props;
   const _ref = ref || createRef<HTMLElement>();
@@ -71,42 +77,30 @@ const InnerSelect = (
     mode,
     values: value || defaultValue,
     options,
+    onChange,
   });
 
   const renderSelected = (selected: OptionProps[]) => {
-    return selected.map((item) => item.title).join('/');
-  };
-
-  const renderChild = (child: React.ReactNode): React.ReactNode => {
-    if (React.isValidElement(child) && child.type === Option) {
-      const { props } = child as React.ReactElement<OptionProps>;
-      // const originalOnClick = props.onClick;
-      const _onClick = (evt: React.MouseEvent): void => {
-        console.log('SelectItem::click::', evt.target);
-        if (!props.disabled) {
-          // originalOnClick && originalOnClick(evt);
-          ctx.onSelect(props);
-          // todo - 在哪里通知外层
-          onChange &&
-            onChange(ctx.selected.map((item) => item.value).join('/'));
-        }
-      };
-      return React.cloneElement(
-        child,
-        Object.assign({}, props, { onClick: _onClick }),
-      );
-    }
-    return child;
+    return selected.length > 0 ? selected.map((item) => item.title).join('/') : placeholder;
   };
 
   return (
     <SelectContext.Provider value={ctx}>
-      <div className={clz} {...others}>
-        <span className="select-bar">{renderSelected(ctx.selected)}</span>
-        <ul className="select-list">
-          {React.Children.map(children, renderChild)}
-        </ul>
-      </div>
+      <Popover trigger='click'>
+        <PopoverTrigger>
+          <Button className="select-bar">
+            {
+              ctx.selected.length > 0 ? ctx.selected.map((item) => item.title).join('/') : placeholder
+            }
+            <Icon type="angle-down" style={{marginLeft: '4px'}}/>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <Menu>
+            {children}
+          </Menu>
+        </PopoverContent>
+      </Popover>
     </SelectContext.Provider>
   );
 };
@@ -117,4 +111,5 @@ Select.displayName = 'Select';
 Select.defaultProps = {
   color: 'primary',
   iSize: 'normal',
+  placeholder: '请选择一项',
 };

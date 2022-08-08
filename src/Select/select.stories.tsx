@@ -24,13 +24,14 @@ export const Static: ComponentStory<typeof Select> = () => (
 Static.storyName = '静态示例';
 
 export const Dynamic: ComponentStory<typeof Select> = (args) => {
-  const [value, setValue] = React.useState('init value');
-  const onChange = (value: string) => {
-    console.log('demo::select::onChange::', value);
+  const [value, setValue] = React.useState<string | number | (string | number)[]>('init value');
+  const onChange = function (value: string | number | (string | number)[]) {
+    console.log('8888888:::demo::select::onChange::', value);
     setValue(value);
   };
+console.log('bbbbbb:::', onChange);
   return (
-    <Select value={value} onChange={onChange} {...args}>
+    <Select value={value} {...args} onChange={onChange}>
       <Option key="1" value={1} title="第一个"></Option>
       <Option key="2" value={2} title="第二个"></Option>
       <Option key="3" value={3} title="第三个"></Option>
@@ -39,9 +40,9 @@ export const Dynamic: ComponentStory<typeof Select> = (args) => {
   );
 };
 Dynamic.args = {
-  color: 'primary',
-  iSize: 'large',
+  // color: 'default',
+  iSize: 'medium',
   disabled: false,
-  defaultValue: 'holder',
+  defaultValue: 2,
 };
 Dynamic.storyName = '动态示例';

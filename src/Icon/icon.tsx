@@ -17,6 +17,10 @@ export interface IconProps {
    */
   className?: string;
   /**
+   * CSS style
+   */
+  style?: React.CSSProperties;
+  /**
    * 颜色
    */
   color?: ColorType;

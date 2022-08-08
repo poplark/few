@@ -30,7 +30,6 @@ export const PopoverTrigger: React.FC<React.PropsWithChildren<PopoverTriggerProp
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (ctx.trigger !== 'click') return;
     const clickHandler = (evt: MouseEvent): void => {
       // ref 引用 trigger 中的容器元素，若不包含事件触发节点，则关闭下拉框
       if (

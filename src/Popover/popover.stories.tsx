@@ -50,7 +50,7 @@ export const Dynamic: ComponentStory<typeof Popover> = (args) => {
           <MenuItem key="1">第一个</MenuItem>
           <MenuItem key="2">第二个</MenuItem>
           <MenuItem key="3">第三个</MenuItem>
-          <MenuItem key="4">第三个</MenuItem>
+          <MenuItem key="4">第四个</MenuItem>
         </Menu>
       </PopoverContent>
     </Popover>
@@ -59,5 +59,6 @@ export const Dynamic: ComponentStory<typeof Popover> = (args) => {
 Dynamic.args = {
   visible: false,
   trigger: 'click',
+  style: {top: '200px', left: '100px'},
 };
 Dynamic.storyName = '动态示例';

@@ -14,6 +14,10 @@ interface IButtonProps {
    */
   size?: SizeType;
   /**
+   * 自定义样式
+   */
+  className?: string;
+  /**
    * button 状态
    */
   state?: StateType;
@@ -34,14 +38,8 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   IButtonProps;
 
 const Button: React.FC<ButtonProps> = function (props) {
-  const { kind, size, state, disabled, href, onClick, children, ...others } =
+  const { kind, size, className, state, disabled, href, onClick, children, ...others } =
     props;
-
-  const kClz = getColorClass(kind as ColorType) || '';
-  const sClz = getSizeClass(size) || 'is-normal';
-  const stClz = getStateClass(state);
-  const dClz = disabled ? 'disabled' : '';
-  const clz = Classnames('button', kClz, sClz, stClz, dClz);
 
   const _onClick = React.useCallback(
     (evt: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>): void => {
@@ -52,6 +50,12 @@ const Button: React.FC<ButtonProps> = function (props) {
     },
     [disabled, onClick],
   );
+
+  const kClz = getColorClass(kind as ColorType) || '';
+  const sClz = getSizeClass(size) || 'is-normal';
+  const stClz = getStateClass(state);
+  const dClz = disabled ? 'disabled' : '';
+  const clz = Classnames('button', kClz, sClz, stClz, dClz, className);
 
   if (kind === 'link' && !!href) {
     return (

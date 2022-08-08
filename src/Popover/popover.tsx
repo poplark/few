@@ -16,9 +16,14 @@ export interface IPopoverProps {
 export type PopoverProps = React.HTMLAttributes<HTMLElement> & IPopoverProps;
 
 export const Popover: React.FC<PopoverProps> = (props) => {
-  const { color, trigger = 'hover', visible = false, placement = 'bottom', onVisibleChange, className, children, ...others } = props;
+  const { color, trigger = 'hover', visible = false, placement = 'bottom', onVisibleChange = () => {}, className, children, ...others } = props;
 
-  const ctx = usePopoverContext(placement, visible, trigger);
+  const ctx = usePopoverContext({
+    placement,
+    visible,
+    trigger,
+    onVisibleChange,
+  });
 
   const open = (evt: React.MouseEvent): void => {
     if (trigger !== 'hover') return;
@@ -48,6 +53,6 @@ Popover.displayName = 'Popover';
 Popover.defaultProps = {
   trigger: 'hover',
   visible: false,
-  placement: 'top',
+  placement: 'bottom',
   onVisibleChange: () => {},
 }

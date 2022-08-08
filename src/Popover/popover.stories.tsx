@@ -37,8 +37,11 @@ export const Static: ComponentStory<typeof Popover> = () => {
 Static.storyName = '静态示例';
 
 export const Dynamic: ComponentStory<typeof Popover> = (args) => {
+  const onVisibleChange = (visible: boolean) => {
+    console.log('popover visible:: ', visible);
+  }
   return (
-    <Popover {...args}>
+    <Popover {...args} onVisibleChange={onVisibleChange}>
       <PopoverTrigger>
         <Button>显示下拉框</Button>
       </PopoverTrigger>

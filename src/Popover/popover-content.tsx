@@ -78,6 +78,38 @@ export const PopoverContent: React.FC<
   }, [ref.current, ctx.visible, ctx.placement]);
 
   useLayoutEffect(() => {
+    if (!ctx.visible) return;
+    if (!ref.current) return;
+    if (!ref.current.parentElement) return;
+
+    const currentElement = ref.current;
+    const { width, height } = ref.current.getBoundingClientRect();
+    const parentElement = ref.current.parentElement;
+    const { width: pWidth, height: pHeight } = parentElement.getBoundingClientRect();
+
+    const originTopStyle = currentElement.style.top;
+    const originLeftStyle = currentElement.style.left;
+    switch (ctx.placement) {
+      case 'bottom':
+      case 'top':
+        currentElement.style.left = `${(pWidth-width)/2}px`;
+        break;
+      case 'left':
+      case 'right':
+        currentElement.style.top = `${(pHeight-height)/2}px`;
+        currentElement.style.left = `${pWidth}px`;
+        break;
+      default:
+    }
+
+    return () => {
+      // 消除前面加/删的 Class 或 Style
+      currentElement.style.top = originTopStyle;
+      currentElement.style.left = originLeftStyle;
+    }
+  }, [ref.current, ctx.visible, ctx.placement]);
+
+  useLayoutEffect(() => {
     return relocation();
   }, [relocation]);
 

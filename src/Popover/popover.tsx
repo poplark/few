@@ -57,6 +57,6 @@ Popover.displayName = 'Popover';
 Popover.defaultProps = {
   trigger: 'hover',
   visible: false,
-  placement: 'bottom',
+  placement: 'bottomLeft',
   onVisibleChange: () => {},
 }

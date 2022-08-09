@@ -1,0 +1,67 @@
+@media screen and (min-width: 769px) {
+  .modal-content,
+  .modal-card {
+    margin: 0 auto;
+    max-height: calc(100vh - 40px);
+    width: 640px;
+  }
+}
+
+.modal-content {
+  background-color: $card-background-color;
+  border-radius: $card-radius;
+  box-shadow: $card-shadow;
+  color: $card-color;
+  max-width: 100%;
+  position: relative;
+}
+
+.modal-header {
+  @extend %card-item;
+  background-color: $card-header-background-color;
+  align-items: stretch;
+  border-bottom: $card-footer-border-top;
+  display: flex;
+}
+
+.modal-header-title {
+  align-items: center;
+  color: $card-header-color;
+  display: flex;
+  flex-grow: 1;
+  font-weight: $card-header-weight;
+  padding: $card-header-padding;
+  &.is-centered {
+    justify-content: center;
+  }
+}
+
+.modal-header-icon {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: $card-header-padding;
+  height: auto;
+  width: auto;
+}
+
+.modal-body {
+  @extend %card-item;
+  background-color: $card-content-background-color;
+  padding: $card-content-padding;
+}
+
+.modal-footer {
+  @extend %card-item;
+  background-color: $card-footer-background-color;
+  border-top: $card-footer-border-top;
+  align-items: stretch;
+  display: flex;
+  padding: $card-footer-padding;
+  flex-flow: row-reverse;
+
+  .button {
+    margin-left: 0.5rem;
+  }
+}

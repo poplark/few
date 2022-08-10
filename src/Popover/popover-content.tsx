@@ -161,19 +161,19 @@ export const PopoverContent: React.FC<
     }
   }, [relocation]);
 
-  const clz = Classnames('popover-content', className);
+  const clz = Classnames('dropdown-content', className);
 
   console.log('PopoverContent::render::');
   return (
     <div className="dropdown-menu" ref={ref}>
-      <div className="dropdown-content">
+      <div className={clz} {...others}>
         { arrow
           ? (
             <div className="popover-arrow"></div>
           )
           : null
         }
-        <div className={clz} {...others}>
+        <div className="popover-content">
           {children}
         </div>
       </div>

@@ -1,6 +1,7 @@
 .popover-content {
   position: relative;
   z-index: 2;
+  min-width: 12rem;
 }
 
 .popover-arrow {
@@ -10,11 +11,15 @@
   top: 3px;
   left: calc(50% - 4px);
   transform: translate(0px, 0px) rotate(45deg);
-  background-color: #fff;
+  background-color: inherit;;
   z-index: 1;
 }
 
 .dropdown {
+  .dropdown-menu {
+    min-width: auto;
+  }
+
   &.is-top,
   &.is-top-left,
   &.is-top-right {

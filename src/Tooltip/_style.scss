@@ -1,0 +1,11 @@
+.tooltip-content {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: $black;
+  color: $white;
+
+  .popover-content {
+    min-width: auto;
+    white-space: nowrap;
+  }
+}

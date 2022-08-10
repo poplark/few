@@ -1,6 +1,6 @@
 import { createContext, useEffect, useCallback, useState } from 'react';
+import { Placement } from '../config/placement-type';
 
-export type Placement = 'top' | 'left' | 'right' | 'bottom' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
 export type Trigger = 'click' | 'hover' | 'focus';
 
 export interface IPopoverContext {

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import Classnames from 'classnames';
 import { ColorType, getColorClass } from '../config/color-type';
-import { PopoverContext, usePopoverContext, Placement, Trigger } from './context';
+import { Placement, getPlacementClass } from '../config/placement-type';
+import { PopoverContext, usePopoverContext, Trigger } from './context';
 
 export interface IPopoverProps {
   color?: ColorType;
@@ -38,9 +39,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
 
   const clz = Classnames('dropdown', {
     'is-active': ctx.visible,
-    'is-right': ['right', 'rightTop', 'rightBottom', 'bottomRight', 'topRight'].includes(ctx.placement),
-    'is-up': ['top', 'topLeft', 'topRight', 'leftTop', 'rightTop'].includes(ctx.placement),
-  });
+  }, getPlacementClass(ctx.placement));
 
   console.log('Popover::render::');
 

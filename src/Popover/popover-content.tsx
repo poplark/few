@@ -4,12 +4,13 @@ import { PopoverContext } from './context';
 
 export interface PopoverContentProps {
   className?: string;
+  arrow?: boolean;
 }
 
 export const PopoverContent: React.FC<
   React.PropsWithChildren<PopoverContentProps>
 > = (props) => {
-  const { className, children, ...others } = props;
+  const { className, arrow, children, ...others } = props;
 
   const ctx = useContext(PopoverContext);
 
@@ -97,7 +98,6 @@ export const PopoverContent: React.FC<
       case 'left':
       case 'right':
         currentElement.style.top = `${(pHeight-height)/2}px`;
-        currentElement.style.left = `${pWidth}px`;
         break;
       default:
     }
@@ -120,16 +120,27 @@ export const PopoverContent: React.FC<
     }
   }, [relocation]);
 
-  const clz = Classnames('dropdown-content', className);
+  const clz = Classnames('popover-content', className);
 
   console.log('PopoverContent::render::');
   return (
     <div className="dropdown-menu" ref={ref}>
-      <div className={clz} {...others}>
-        {children}
+      <div className="dropdown-content">
+        { arrow
+          ? (
+            <div className="popover-arrow"></div>
+          )
+          : null
+        }
+        <div className={clz} {...others}>
+          {children}
+        </div>
       </div>
     </div>
   );
 };
 
 PopoverContent.displayName = 'PopoverContent';
+PopoverContent.defaultProps = {
+  arrow: false,
+}

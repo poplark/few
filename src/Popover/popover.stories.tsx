@@ -4,8 +4,6 @@ import { Button } from '../Button';
 import { Popover } from './popover';
 import { PopoverTrigger } from './popover-trigger';
 import { PopoverContent } from './popover-content';
-import { Menu } from '../Menu/menu';
-import { MenuItem } from '../Menu/menu-item';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -25,11 +23,7 @@ export const Static: ComponentStory<typeof Popover> = () => {
         <Button>显示下拉框</Button>
       </PopoverTrigger>
       <PopoverContent>
-        <Menu>
-          <MenuItem key="1">第一个</MenuItem>
-          <MenuItem key="2">第二个</MenuItem>
-          <MenuItem key="3">第三个</MenuItem>
-        </Menu>
+        popover
       </PopoverContent>
     </Popover>
   );
@@ -43,15 +37,12 @@ export const Dynamic: ComponentStory<typeof Popover> = (args) => {
   return (
     <Popover {...args} onVisibleChange={onVisibleChange}>
       <PopoverTrigger>
-        <Button>显示下拉框</Button>
+        <Button style={{padding: '40px'}}>显示下拉框</Button>
       </PopoverTrigger>
-      <PopoverContent>
-        <Menu>
-          <MenuItem key="1">第一个</MenuItem>
-          <MenuItem key="2">第二个</MenuItem>
-          <MenuItem key="3">第三个</MenuItem>
-          <MenuItem key="4">第四个</MenuItem>
-        </Menu>
+      <PopoverContent arrow>
+        <div style={{padding: '40px'}}>
+          {args.placement}
+        </div>
       </PopoverContent>
     </Popover>
   );
@@ -59,6 +50,7 @@ export const Dynamic: ComponentStory<typeof Popover> = (args) => {
 Dynamic.args = {
   visible: false,
   trigger: 'click',
-  style: {top: '200px', left: '100px'},
+  placement: 'bottom',
+  style: {top: '200px', left: '200px'},
 };
 Dynamic.storyName = '动态示例';

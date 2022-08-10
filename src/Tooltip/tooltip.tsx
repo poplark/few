@@ -3,7 +3,7 @@ import Classnames from 'classnames';
 import { Popover, PopoverTrigger, PopoverContent } from '../Popover';
 import { Placement } from '../config/placement-type';
 
-export interface Tooltip {
+export interface TooltipProps {
   title?: React.ReactNode;
   placement?: Placement;
   visible?: boolean;
@@ -11,7 +11,7 @@ export interface Tooltip {
   style?: React.CSSProperties;
 }
 
-export const Tooltip: React.FC<React.PropsWithChildren<Tooltip>> = (props) => {
+export const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = (props) => {
   const { title, placement, visible, className, style, children, ...others } = props;
   const clz = Classnames('tooltip-content', className);
   return (

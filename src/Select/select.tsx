@@ -29,6 +29,8 @@ export interface SelectProps {
   mode?: 'single' | 'multi';
   onChange?: (v: string | number | (string | number)[]) => void;
   placeholder?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 export const Select = (props: React.PropsWithChildren<SelectProps>): JSX.Element => {
@@ -43,20 +45,10 @@ export const Select = (props: React.PropsWithChildren<SelectProps>): JSX.Element
     children,
     onChange,
     placeholder,
+    className,
+    style,
     ...others
   } = props;
-
-  const [isSingle] = useState(() => mode !== 'multi');
-  // check children is option or optgroup
-  // if (!isOptgroup(children) || !isOption(children)) {
-  //   throw new Error('option or optgroup are invalid.');
-  // }
-
-  const kClz = getColorClass(color);
-  const sClz = getSizeClass(iSize) || 'is-normal';
-  const stClz = getStateClass(state);
-  const dClz = disabled ? 'disabled' : '';
-  const clz = Classnames('select-bar', kClz, sClz, stClz, dClz);
 
   const options = React.Children.map(children, (child) => {
     if (React.isValidElement(child) && child.type === Option) {
@@ -76,9 +68,17 @@ export const Select = (props: React.PropsWithChildren<SelectProps>): JSX.Element
     onChange,
   });
 
+  const kClz = getColorClass(color);
+  const sClz = getSizeClass(iSize) || 'is-normal';
+  const stClz = getStateClass(state);
+  const dClz = disabled ? 'disabled' : '';
+  const clz = Classnames('select-bar', kClz, sClz, stClz, dClz);
+
+  const cClz = Classnames('select-content', className);
+
   return (
     <SelectContext.Provider value={ctx}>
-      <Popover trigger='click'>
+      <Popover trigger='click' style={style}>
         <PopoverTrigger>
           <Button className={clz}>
             {
@@ -87,7 +87,7 @@ export const Select = (props: React.PropsWithChildren<SelectProps>): JSX.Element
             <Icon type="angle-down" style={{marginLeft: '4px'}}/>
           </Button>
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent className={cClz} {...others}>
           <Menu>
             {children}
           </Menu>

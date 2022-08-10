@@ -17,7 +17,7 @@ export interface IPopoverProps {
 export type PopoverProps = React.HTMLAttributes<HTMLElement> & IPopoverProps;
 
 export const Popover: React.FC<PopoverProps> = (props) => {
-  const { color, trigger = 'hover', visible = false, placement = 'bottom', onVisibleChange = () => {}, className, children, ...others } = props;
+  const { color, trigger = 'hover', visible = false, placement = 'bottomLeft', onVisibleChange = () => {}, className, children, ...others } = props;
 
   const ctx = usePopoverContext({
     placement,
@@ -42,7 +42,6 @@ export const Popover: React.FC<PopoverProps> = (props) => {
   }, getPlacementClass(ctx.placement));
 
   console.log('Popover::render::');
-
   return (
     <PopoverContext.Provider value={ctx}>
       <div className={clz} onMouseEnter={open} onMouseLeave={close} {...others}>

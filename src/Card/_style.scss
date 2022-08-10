@@ -1,0 +1,10 @@
+.card-header {
+  &.is-inner {
+    background-color: var(--theme-header-background-color, $white-ter);
+
+    .card-header-title {
+      color: var(--theme-header-text-color, $black-ter);
+    }
+  }
+}
+

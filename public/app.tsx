@@ -3,6 +3,7 @@ import { Button } from '@/Button';
 import { Menu, MenuItem } from '@/Menu';
 import { Dropdown, DropdownTrigger, DropdownContent } from '@/Dropdown';
 import { Popovers } from './popovers';
+import { Card } from '@/Card';
 
 // 由于 Dropdown 内部没想到好的处理方式，setV 会触发 Menu 的 re-render。
 // 目前想到这样可以，还有下面用 React.useMemo 的方式也可以
@@ -31,11 +32,13 @@ export default function App() {
   ), []);
   return (
     <div>
-      <div>Hello world. v: {v} </div>
-      <div>
-        <Button onClick={handleClick}>ClickMe</Button>
-      </div>
-      {dropdown}
+      <Card title="card" type='inner'>
+        <div>Hello world. v: {v} </div>
+        <div>
+          <Button onClick={handleClick}>ClickMe</Button>
+        </div>
+        {dropdown}
+      </Card>
       <hr/>
       <Popovers></Popovers>
     </div>

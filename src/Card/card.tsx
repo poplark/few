@@ -18,6 +18,8 @@ export const Card: React.FC<React.PropsWithChildren<CardProps>> = (props) => {
 
   const clz = Classnames('card', className);
   const hClz = Classnames('card-header', {'is-inner': type === 'inner'});
+
+  console.log('Card::render::');
   return (
     <div className={clz} style={style}>
       {

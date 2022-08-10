@@ -1,10 +1,14 @@
+$black:        hsl(0, 0%, 4%) !default;
+$white:        hsl(0, 0%, 100%) !default;
+$scheme-invert: $black !default;
+
 // 链接
 $link-decoration: none !default;
 $link-hover-decoration: underline !default;
 
 // body
 $body-bg: $white !default;
-$body-color: $gray-900 !default;
+// $body-color: $gray-900 !default;
 $body-text-align: null !default;
 
 // spacing
@@ -13,3 +17,6 @@ $body-text-align: null !default;
 $line-height-base:            1.5 !default;
 $line-height-lg:              2 !default;
 $line-height-sm:              1.25 !default;
+
+$dropdown-content-offset: 6px !default;
+$shadow: 0 0.25em 1.5em -0.125em rgba($scheme-invert, 0.3), 0 0px 0 1px rgba($scheme-invert, 0.02) !default;

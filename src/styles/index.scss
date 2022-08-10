@@ -1,7 +1,6 @@
+@import 'variables';
 @import 'bulma/bulma.sass';
 @import '@fortawesome/fontawesome-free/css/all.css';
-
-@import 'variables';
 
 @import '../Button/style';
 @import '../Icon/style';
@@ -10,3 +9,4 @@
 @import '../Dropdown/style';
 @import '../Select/style';
 @import '../Modal/style';
+@import '../Popover/style';

@@ -55,7 +55,7 @@ export const Dynamic: ComponentStory<typeof Tabs> = (args) => {
       <TabPane key="3" tab={<div><Icon type="image"/><span>第三个</span></div>}>
         第三个 Tab 的内容
       </TabPane>
-      <TabPane key="4" tab={<div><Icon type="image"/><p>第四个</p></div>}>
+      <TabPane key="4" tab={<div><Icon type="desktop"/><span>第四个</span></div>}>
         第四个 Tab 的内容
       </TabPane>
       {p}

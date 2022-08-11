@@ -1,0 +1,25 @@
+.tabs {
+  flex-direction: column;
+
+  &.is-bottom {
+    flex-direction: column-reverse;
+  }
+
+  &.is-left {
+    flex-direction: row;
+  }
+
+  &.is-right {
+    flex-direction: row-reverse;
+  }
+
+  .tab-panes {
+    flex: 1;
+  }
+  .tab-pane {
+    display: none;
+    &.is-active {
+      display: block;
+    }
+  }
+}

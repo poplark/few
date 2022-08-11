@@ -24,10 +24,10 @@ export interface SelectProps {
    */
   state?: StateType;
   disabled?: boolean;
-  value?: string | number | (string | number)[]
+  value?: string | number | (string | number)[];
   defaultValue?: string | number | (string | number)[];
   mode?: 'single' | 'multi';
-  onChange?: (v: string | number | (string | number)[]) => void;
+  onChange?: (v?: string | number | (string | number)[]) => void;
   placeholder?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -63,7 +63,8 @@ export const Select = (props: React.PropsWithChildren<SelectProps>): JSX.Element
   const ctx = useSelectContext({
     size: iSize,
     mode,
-    values: value || defaultValue,
+    value,
+    defaultValue,
     options,
     onChange,
   });

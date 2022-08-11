@@ -13,6 +13,7 @@ export interface TabPaneProps {
 export const TabPane: React.FC<PropsWithChildren<TabPaneProps>> = (props) => {
   const { active, className, style, children } = props;
   const clz = Classnames('tab-pane', active ? 'is-active' : '', className);
+  console.log('TabPane::render::');
   return (
     <div className={clz} style={style}>
       {children}

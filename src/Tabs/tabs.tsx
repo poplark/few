@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Classnames from 'classnames';
 import { SizeType, getSizeClass } from '../config/size-type';
 import { TabPane, TabPaneProps } from './tab-pane';
@@ -6,7 +6,7 @@ import { TabPane, TabPaneProps } from './tab-pane';
 export interface TabsProps {
   defaultActiveKey?: string;
   activeKey?: string;
-  alignment?: 'centered' | 'right';
+  alignment?: 'left' | 'centered' | 'right';
   size?: SizeType;
   kind?: 'boxed' | 'toggle' | 'toggle-rounded' | 'fullwidth';
   className?: string;
@@ -19,13 +19,17 @@ export interface TabsProps {
 export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = (props) => {
   const { defaultActiveKey, activeKey, alignment, size, kind, className, style, tabPosition, onChange, onTabClick, children, ...others } = props;
 
-  const [activeTab, setActiveTab] = useState(defaultActiveKey || activeKey);
+  const [activeTab, setActiveTab] = useState(activeKey || defaultActiveKey);
 
   useEffect(() => {
     activeKey && setActiveTab(activeKey);
   }, [activeKey]);
 
-  const renderTabs = useCallback(() => {
+  useEffect(() => {
+    activeTab && onChange && onChange(activeTab);
+  }, [activeTab]);
+
+  const renderTabs = () => {
     let _active = activeTab;
     function onClick(key: string, evt: React.MouseEvent) {
       onTabClick && onTabClick(key, evt);
@@ -61,13 +65,12 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = (props) => {
       return null;
     });
     if (_active && _active !== activeTab) {
-      onChange && onChange(_active as string);
       setActiveTab(_active);
     }
     return res;
-  }, [activeTab, children]);
+  };
 
-  const renderPanels = useCallback(() => {
+  const renderPanes = () => {
     return React.Children.map(children, (child) => {
       if (React.isValidElement(child) && child.type === TabPane) {
         if (child.key === activeTab) {
@@ -76,8 +79,7 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = (props) => {
         return child;
       }
     });
-  }, [activeTab, children]);
-
+  };
 
   const aClz = alignment && ['centered', 'right'].includes(alignment) ? `is-${alignment}` : null;
   const kClz = kind && ['boxed', 'toggle', 'toggle-rounded', 'fullwidth'].includes(kind) ? `is-${kind}` : null;
@@ -91,13 +93,14 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = (props) => {
         { renderTabs() }
       </ul>
       <div className="tab-panes">
-        { renderPanels() }
+        { renderPanes() }
       </div>
     </div>
   )
 }
 Tabs.displayName = 'Tabs';
 Tabs.defaultProps = {
+  alignment: 'left',
   size: 'normal',
   tabPosition: 'top',
 };

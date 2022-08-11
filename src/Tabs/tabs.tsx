@@ -78,7 +78,7 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = (props) => {
 
   const aClz = alignment && ['centered', 'right'].includes(alignment) ? `is-${alignment}` : null;
   const kClz = kind && ['boxed', 'toggle', 'toggle-rounded', 'fullwidth'].includes(kind) ? `is-${kind}` : null;
-  const pClz = tabPosition && ['top', 'bottom', 'left', 'right'].includes(tabPosition) ? `is-${tabPosition}` : null;
+  const pClz = tabPosition && ['top', 'bottom', 'left', 'right'].includes(tabPosition) ? `position-${tabPosition}` : null;
   const clz = Classnames('tabs', aClz, kClz, getSizeClass(size), pClz, className);
 
   console.log('Tabs::render::');

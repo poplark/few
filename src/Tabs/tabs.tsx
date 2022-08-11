@@ -22,7 +22,7 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = (props) => {
   const [activeTab, setActiveTab] = useState(defaultActiveKey || activeKey);
 
   useEffect(() => {
-    setActiveTab(activeKey);
+    activeKey && setActiveTab(activeKey);
   }, [activeKey]);
 
   const renderTabs = useCallback(() => {
@@ -36,7 +36,6 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = (props) => {
         if (child.type === TabPane) {
           const key = child.key as string;
           const { tab, disabled, active } =  child.props as TabPaneProps;
-          console.log('rrrrrrr', key);
           if (!activeTab) {
             if (!_active && !disabled) {
               _active = key;
@@ -50,7 +49,11 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = (props) => {
           const clz = Classnames({'disabled': !!disabled});
           return (
             <li key={child.key} className={lClz}>
-              <a onClick={onClick.bind(null, key)} className={clz}>{tab}</a>
+              {
+                !!disabled
+                  ? <a  className={clz}>{tab}</a>
+                  : <a onClick={onClick.bind(null, key)} className={clz}>{tab}</a>
+              }
             </li>
           );
         }

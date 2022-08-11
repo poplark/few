@@ -1,6 +1,44 @@
 .tabs {
   flex-direction: column;
 
+  a {
+    &.disabled {
+      pointer-events: none;
+      color: $grey-light;
+    }
+  }
+
+  &.position-top,
+  &.position-bottom {
+    ul li a {
+      max-height: 2.5625rem;
+      overflow: hidden;
+    }
+    &.is-large {
+      ul li a {
+        max-height: 3.8125rem;
+      }
+    }
+    &.is-medium {
+      ul li a {
+        max-height: 3.1875rem;
+      }
+    }
+    &.is-small {
+      ul li a {
+        max-height: 1.9375rem;
+      }
+    }
+  }
+  &.position-left,
+  &.position-right {
+    ul {
+      li {
+        width: 100%;
+      }
+    }
+  }
+
   &.position-bottom {
     flex-direction: column-reverse;
 
@@ -122,6 +160,10 @@
     &.is-toggle {
       a {
         margin-right: 0;
+        border-bottom-color: $tabs-border-bottom-color;
+        &:hover {
+          border-bottom-color: $tabs-border-bottom-color;
+        }
       }
       li {
         & + li {
@@ -209,6 +251,10 @@
     &.is-toggle {
       a {
         margin-left: 0;
+        border-bottom-color: $tabs-border-bottom-color;
+        &:hover {
+          border-bottom-color: $tabs-border-bottom-color;
+        }
       }
       li {
         & + li {
@@ -274,4 +320,8 @@
       display: block;
     }
   }
+}
+
+.tab-panes {
+  padding: 0.5rem;
 }
